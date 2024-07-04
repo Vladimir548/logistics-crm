@@ -14,6 +14,7 @@ import HomeLayout from '@/app/layouts/HomeLayout';
 import {QueryCarrier} from "@/app/api/query/query-carrier";
 import InputCustom from "@/components/input/InputCustom";
 import {Button} from "@/components/buttons/Buttons";
+import FormLayouts from "@/app/layouts/FormLayouts";
 
 export default function CarrierCreate() {
   const { register, handleSubmit, control, reset } = useForm<ICarrier>({});
@@ -34,10 +35,8 @@ export default function CarrierCreate() {
     mutate(data);
   };
   return (
-    <div>
-        <form onSubmit={handleSubmit(onSubmit)} className={' m-2 '}>
-          <div className="flex  gap-2 flex-wrap">
-            <div className={'flex flex-col gap-x-2'}>
+      <FormLayouts buttonVariant={'add'} handleFn={handleSubmit(onSubmit)} label={'Создать'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -46,7 +45,7 @@ export default function CarrierCreate() {
                   name="name"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -55,7 +54,7 @@ export default function CarrierCreate() {
                   name="legalAndActualAddress"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -64,7 +63,7 @@ export default function CarrierCreate() {
                   name="mailingAddress"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -74,7 +73,7 @@ export default function CarrierCreate() {
                   name="inn"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
 
               <Controller
                 control={control}
@@ -98,7 +97,7 @@ export default function CarrierCreate() {
                 name={'ogrn'}
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -108,7 +107,7 @@ export default function CarrierCreate() {
                   name="kpp"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -117,7 +116,7 @@ export default function CarrierCreate() {
                   name="bank"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -127,7 +126,7 @@ export default function CarrierCreate() {
                   name="checkingAccount"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
 
               <Controller
                   control={control}
@@ -138,7 +137,7 @@ export default function CarrierCreate() {
                   name="cashAccount"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -148,10 +147,6 @@ export default function CarrierCreate() {
                   name="bic"
               />
             </div>
-          </div>
-            <Button   type={'submit'} variant={"add"}>Создать</Button>
-        </form>
-
-    </div>
+      </FormLayouts>
   );
 }

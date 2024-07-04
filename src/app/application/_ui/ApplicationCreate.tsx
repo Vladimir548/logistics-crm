@@ -16,11 +16,11 @@ import InputCustom from "@/components/input/InputCustom";
 import SelectPaymentMethod from "@/app/(home)/create/registry-select/select/payment-method/SelectPaymentMethod";
 import {Button} from "@/components/buttons/Buttons";
 import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
+import FormLayouts from "@/app/layouts/FormLayouts";
 
 export default function ApplicationCreate() {
   const idUser = getIdUser();
-  console.log(idUser)
-  const { register, handleSubmit, control, reset } = useForm<IApplication>({
+  const {  handleSubmit, control, reset } = useForm<IApplication>({
     defaultValues: {
       userId: Number(idUser),
     },
@@ -46,10 +46,8 @@ export default function ApplicationCreate() {
 
   };
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className={'m-2'}>
-        <div className="flex  gap-2 flex-wrap">
-          <div className="flex flex-col gap-y-2">
+   <FormLayouts buttonVariant={'add'} handleFn={handleSubmit(onSubmit)} label={'Создать'}>
+          <div >
             <Controller
                 control={control}
                 render={({field: {onChange, value}}) => (
@@ -57,14 +55,12 @@ export default function ApplicationCreate() {
                 )}
                 name="applicationNumber"
             />
-
-
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div >
 
             <SelectCostumer<IApplication> control={control} field={'costumerId'} fieldContact={'costumerContactPersonId'} />
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div >
             <Controller
                 control={control}
                 render={({field: {onChange, value}}) => (
@@ -73,7 +69,7 @@ export default function ApplicationCreate() {
                 name="weight"
             />
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div >
 
             <Controller
                 control={control}
@@ -83,14 +79,10 @@ export default function ApplicationCreate() {
                 name="unloadingAddress"
             />
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div >
             <SelectPaymentMethod control={control} field={'paymentMethodToUs'} />
           </div>
-        </div>
+   </FormLayouts>
 
-          <Button  type={'submit'} variant={'add'}>Создать</Button>
-
-      </form>
-    </div>
   );
 }

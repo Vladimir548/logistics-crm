@@ -8,6 +8,7 @@ import { IAccountNumber } from '@/interface/interface-account-number';
 import {QueryAccountNumber} from "@/app/api/query/query-account-number";
 import InputCustom from "@/components/input/InputCustom";
 import {Button} from "@/components/buttons/Buttons";
+import FormLayouts from "@/app/layouts/FormLayouts";
 
 export default function AccountNumberCreate() {
   const { register, handleSubmit, control, reset } = useForm<IAccountNumber>({
@@ -28,11 +29,9 @@ export default function AccountNumberCreate() {
     mutate(data);
   };
   return (
-    <div>
-
-        <form onSubmit={handleSubmit(onSubmit)} className={'m-2'}>
+      <FormLayouts buttonVariant={'add'} handleFn={handleSubmit(onSubmit)} label={'Создать'}>
           <div className="flex  gap-2 flex-wrap">
-            <div className="flex flex-col gap-y-2">
+            <div>
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -46,9 +45,6 @@ export default function AccountNumberCreate() {
 
             </div>
           </div>
-         <Button type={"submit"} variant={"add"}>Создать</Button>
-        </form>
-
-    </div>
+      </FormLayouts>
   );
 }

@@ -14,9 +14,10 @@ import InputCustom from "@/components/input/InputCustom";
 import InputDateCustom from "@/components/input/InputDateCustom";
 import {parseDate} from "@internationalized/date";
 import {Button} from "@/components/buttons/Buttons";
+import FormLayouts from "@/app/layouts/FormLayouts";
 
 export default function CarrierDriverCreate() {
-  const { register, handleSubmit, control, reset } = useForm<IDriver>({});
+  const { handleSubmit, control, reset } = useForm<IDriver>({});
 
   const { mutate } = useMutation({
     mutationKey: ['create-carrier-driver'],
@@ -34,11 +35,8 @@ export default function CarrierDriverCreate() {
     mutate(data);
   };
   return (
-    <div>
-
-        <form onSubmit={handleSubmit(onSubmit)} className={' m-2'}>
-          <div className="flex  gap-2 flex-wrap">
-            <div className={'flex flex-col gap-x-2'}>
+      <FormLayouts buttonVariant={'add'} handleFn={handleSubmit(onSubmit)} label={'Создать'}>
+            <div >
 
                 <Controller
                     control={control}
@@ -48,7 +46,7 @@ export default function CarrierDriverCreate() {
                     name="fullName"
                 />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
 
               <Controller
                 control={control}
@@ -72,11 +70,11 @@ export default function CarrierDriverCreate() {
                 name={'numberPhone'}
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
 
               <SelectCarrier control={control} field={'carrierId'} />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                 control={control}
                 render={({ field: { onChange, value } }) => (
@@ -99,7 +97,7 @@ export default function CarrierDriverCreate() {
                 name={'passportNumberAndSeries'}
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
                 <Controller
                     control={control}
                     render={({ field: { onChange, value } }) => (
@@ -108,7 +106,7 @@ export default function CarrierDriverCreate() {
                     name="passportIssueDate"
                 />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
 
                 <Controller
                     control={control}
@@ -119,7 +117,7 @@ export default function CarrierDriverCreate() {
                 />
             </div>
 
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                 control={control}
                 render={({ field: { onChange, value } }) => (
@@ -142,7 +140,7 @@ export default function CarrierDriverCreate() {
                 name={'passportSubdivisionCode'}
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                 control={control}
                 render={({ field: { onChange, value } }) => (
@@ -165,7 +163,7 @@ export default function CarrierDriverCreate() {
                 name={'driversLicenseSeriesAndNumber'}
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
 
                 <Controller
                     control={control}
@@ -175,13 +173,6 @@ export default function CarrierDriverCreate() {
                     name="dateOfIssueOfDriversLicense"
                 />
             </div>
-          </div>
-
-              <Button variant={"add"}   type={'submit'}>Создать</Button>
-
-
-        </form>
-
-    </div>
+      </FormLayouts>
   );
 }

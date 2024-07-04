@@ -1,12 +1,14 @@
-import HomeLayout from "@/app/layouts/HomeLayout";
+
 import ApplicationCreate from "@/app/application/_ui/ApplicationCreate";
+
+import HomeLayout from "@/app/layouts/HomeLayout";
 
 export default function Page() {
     return (
         <div>
-            <HomeLayout>
+                <HomeLayout>
                 <ApplicationCreate/>
-            </HomeLayout>
+                </HomeLayout>
 
         </div>
     );

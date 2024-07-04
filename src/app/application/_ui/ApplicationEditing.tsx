@@ -12,16 +12,14 @@ import InputCustom from "@/components/input/InputCustom";
 import {QueryApplication} from "@/app/api/query/query-application";
 import SelectCostumer from "@/app/(home)/create/registry-select/select/costumer/SelectCostumer";
 import SelectPaymentMethod from "@/app/(home)/create/registry-select/select/payment-method/SelectPaymentMethod";
-import {useParams} from "next/navigation";
 import {useEffect} from "react";
 import {Button} from "@/components/buttons/Buttons";
 import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
+import FormLayouts from "@/app/layouts/FormLayouts";
 
 
 export default function ApplicationEditing() {
   const { id } = useContextMenu();
-  // Сделать id а не номер договора
-  // const {id} = useParams()
   useEffect(()=>{
 
   },[id])
@@ -50,17 +48,7 @@ export default function ApplicationEditing() {
   };
 
   return (
-    <div className={'h-full'}>
-      <form onSubmit={handleSubmit(onSubmit)} className={' h-full border-text-dark border p-2  rounded-md'}>
-        <div className="flex justify-end w-full border-b border-text mb-2">
-          <Button variant={'editing'}
-
-                  type={'submit'}
-          >
-            Сохранить
-          </Button>
-        </div>
-        <div className="flex  gap-2 flex-wrap">
+      <FormLayouts handleFn={handleSubmit(onSubmit)} label={'Сохранить'} buttonVariant={'editing'} >
           <div className="flex flex-col gap-y-2">
             <Controller
                 control={control}
@@ -100,11 +88,6 @@ export default function ApplicationEditing() {
             <SelectPaymentMethod control={control} field={'paymentMethodToUs'}/>
 
           </div>
-        </div>
-
-
-
-      </form>
-    </div>
+    </FormLayouts>
   );
 }

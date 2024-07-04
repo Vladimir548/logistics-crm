@@ -1,13 +1,12 @@
 import ApplicationEditing from "@/app/application/_ui/ApplicationEditing";
-
-import FormLayouts from "@/app/layouts/FormLayouts";
+import HomeLayout from "@/app/layouts/HomeLayout";
 
 export default function Page() {
     return (
 
-            <FormLayouts>
+            <HomeLayout>
             <ApplicationEditing/>
-            </FormLayouts>
+            </HomeLayout>
 
 
     );

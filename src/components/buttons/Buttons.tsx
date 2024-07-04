@@ -5,7 +5,7 @@ import cn from "classnames";
 
 
 
-const buttonVariants = cva(
+ const buttonVariants = cva(
     "inline-flex items-center justify-center my-1 whitespace-nowrap gap-x-2  rounded-md text-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
     {
         variants: {
@@ -42,7 +42,7 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, size, asChild = false, ...props }, ref) => {
+    ({ className,  variant, size, asChild = false, ...props }, ref) => {
         const Comp = asChild ? Slot : "button"
         return (
             <Comp

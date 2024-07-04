@@ -5,16 +5,13 @@ import { ICostumer } from '@/interface/interface-costumer';
 import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { errorCatch } from '@/app/api/api.helper';
-
-
 import { PatternFormat } from 'react-number-format';
-import HomeLayout from '@/app/layouts/HomeLayout';
 import {QueryCostumer} from "@/app/api/query/QueryCostumer";
 import InputCustom from "@/components/input/InputCustom";
-import {Button} from "@/components/buttons/Buttons";
+import FormLayouts from "@/app/layouts/FormLayouts";
 
 export default function CostumerCreate() {
-  const { register, handleSubmit, control, reset } = useForm<ICostumer>({});
+  const { handleSubmit, control, reset } = useForm<ICostumer>({});
 
   const { mutate } = useMutation({
     mutationKey: ['create-costumer'],
@@ -29,15 +26,11 @@ export default function CostumerCreate() {
     },
   });
   const onSubmit: SubmitHandler<ICostumer> = (data) => {
-    console.log(data);
     mutate(data);
   };
   return (
-    <div>
-
-        <form onSubmit={handleSubmit(onSubmit)} className={' m-2 '}>
-          <div className="flex  gap-2 flex-wrap">
-            <div className={'flex flex-col gap-x-2'}>
+      <FormLayouts buttonVariant={'add'} handleFn={handleSubmit(onSubmit)} label={'Создать'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -46,7 +39,7 @@ export default function CostumerCreate() {
                   name="name"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -55,7 +48,7 @@ export default function CostumerCreate() {
                   name="legalAndActualAddress"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -64,7 +57,7 @@ export default function CostumerCreate() {
                   name="mailingAddress"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -74,7 +67,7 @@ export default function CostumerCreate() {
                   name="inn"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
 
               <Controller
                   control={control}
@@ -98,7 +91,7 @@ export default function CostumerCreate() {
                   name={'ogrn'}
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -108,7 +101,7 @@ export default function CostumerCreate() {
                   name="kpp"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -117,7 +110,7 @@ export default function CostumerCreate() {
                   name="bank"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -127,7 +120,7 @@ export default function CostumerCreate() {
                   name="checkingAccount"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
 
               <Controller
                   control={control}
@@ -138,7 +131,7 @@ export default function CostumerCreate() {
                   name="cashAccount"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -148,10 +141,7 @@ export default function CostumerCreate() {
                   name="bic"
               />
             </div>
-          </div>
-          <Button type={'submit'} variant={"add"}>Создать</Button>
-        </form>
 
-    </div>
+      </FormLayouts>
   );
 }

@@ -15,8 +15,7 @@ import InputCustom from "@/components/input/InputCustom";
 import InputDateCustom from "@/components/input/InputDateCustom";
 import {parseDate} from "@internationalized/date";
 import SelectPaymentMethod from "@/app/(home)/create/registry-select/select/payment-method/SelectPaymentMethod";
-import {Button} from "@/components/buttons/Buttons";
-
+import FormLayouts from "@/app/layouts/FormLayouts";
 
 export default function InvoiceCreate() {
   const idUser = getIdUser();
@@ -44,9 +43,8 @@ export default function InvoiceCreate() {
   };
   return (
 
-      <form onSubmit={handleSubmit(onSubmit)} className={'p-2 w-full'}>
-        <div className="flex w-full gap-2 flex-wrap">
-          <div className="flex flex-col gap-y-2">
+      <FormLayouts handleFn={handleSubmit(onSubmit)} label={'Создать'} buttonVariant={'add'} >
+        <div >
             <Controller
                 control={control}
                 render={({ field: { onChange, value } }) => (
@@ -55,12 +53,11 @@ export default function InvoiceCreate() {
                 name="invoiceNumber"
             />
           </div>
-          <div className="flex flex-col gap-y-2">
-
+          <div >
             <InvoiceSelectApplication control={control} />
           </div>
 
-          <div className="flex flex-col gap-y-2">
+          <div >
             <Controller
               control={control}
               render={({ field: { onChange, value } }) => (
@@ -81,7 +78,7 @@ export default function InvoiceCreate() {
               name="amountOfPaymentToUs"
             />
           </div>
-            <div className="flex flex-col gap-y-2">
+            <div >
               <Controller
                   control={control}
                   render={({ field: { onChange, value } }) => (
@@ -90,10 +87,10 @@ export default function InvoiceCreate() {
                   name="paymentDeadlineToUs"
               />
             </div>
-            <div className="flex flex-col gap-y-2">
+            <div  >
               <SelectPaymentMethod control={control} field={'paymentMethodToUs'} />
             </div>
-            <div className="flex flex-col gap-y-2">
+            <div  >
               <Controller
                   control={control}
                   render={({ field: { onChange, value } }) => (
@@ -102,14 +99,11 @@ export default function InvoiceCreate() {
                   name="dateOfPaymentToUs"
               />
             </div>
-            <div className="flex flex-col gap-y-2">
+            <div  >
 
               <InvoiceSelectAccountNumber control={control} />
             </div>
-
-        </div>
-          <Button  type={'submit'} variant={'add'}>Создать</Button>
-      </form>
+    </FormLayouts>
 
   );
 };

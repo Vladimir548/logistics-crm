@@ -13,6 +13,7 @@ import {parseDate} from "@internationalized/date";
 import InvoiceSelectApplication from "@/app/invoice/_ui/select/InvoiceSelectApplication";
 import InvoiceSelectAccountNumber from "@/app/invoice/_ui/select/InvoiceSelectAccountNumber";
 import SelectPaymentMethod from "@/app/(home)/create/registry-select/select/payment-method/SelectPaymentMethod";
+import FormLayouts from "@/app/layouts/FormLayouts";
 export default function InvoiceEditing() {
   const { numberInvoice } = useContextMenu();
   const { data } = useQuery({
@@ -42,9 +43,7 @@ export default function InvoiceEditing() {
     mutate(data);
   };
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className={'m-2'}>
-        <div className="flex w-full gap-2 flex-wrap">
+      <FormLayouts buttonVariant={'editing'} handleFn={handleSubmit(onSubmit)} label={'Сохранить'}>
           <div className="flex flex-col gap-y-2">
             <Controller
                 control={control}
@@ -106,17 +105,6 @@ export default function InvoiceEditing() {
 
             <InvoiceSelectAccountNumber control={control}/>
           </div>
-
-        </div>
-        <button
-            className={
-              'py-2 mt-2 px-3 border rounded-md border-yellow-500 duration-300 ease-linear hover:bg-yellow-600/40'
-            }
-            type={'submit'}
-        >
-          Редактировать
-        </button>
-      </form>
-    </div>
+      </FormLayouts>
   );
 }

@@ -1,24 +1,18 @@
 'use client';
 
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-
 import { useMutation } from '@tanstack/react-query';
-
 import toast from 'react-hot-toast';
 import { errorCatch } from '@/app/api/api.helper';
-
 import { PatternFormat } from 'react-number-format';
-
 import { ICarrierContact } from '@/interface/interface-carrier-contact';
-
-import HomeLayout from '@/app/layouts/HomeLayout';
 import {QueryContactCarrier} from "@/app/api/query/query-contact-carrier";
 import SelectCarrier from "@/app/(home)/create/registry-select/select/carrier/SelectCarrier";
 import InputCustom from "@/components/input/InputCustom";
-import {Button} from "@/components/buttons/Buttons";
+import FormLayouts from "@/app/layouts/FormLayouts";
 
 export default function CarrierContactCreate() {
-  const { register, handleSubmit, control, reset } = useForm<ICarrierContact>({});
+  const { handleSubmit, control, reset } = useForm<ICarrierContact>({});
 
   const { mutate } = useMutation({
     mutationKey: ['create-carrier-contact'],
@@ -36,11 +30,8 @@ export default function CarrierContactCreate() {
     mutate(data);
   };
   return (
-    <div>
-
-        <form onSubmit={handleSubmit(onSubmit)} className={' m-2'}>
-          <div className="flex  gap-2 flex-wrap">
-            <div className={'flex flex-col gap-x-2'}>
+      <FormLayouts buttonVariant={'add'} handleFn={handleSubmit(onSubmit)} label={'Создать'}>
+            <div >
               <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
@@ -49,7 +40,7 @@ export default function CarrierContactCreate() {
                   name="fullName"
               />
             </div>
-            <div className={'flex flex-col gap-x-2'}>
+            <div >
 
               <Controller
                 control={control}
@@ -76,13 +67,6 @@ export default function CarrierContactCreate() {
             <div className={'flex gap-x-2'}>
               <SelectCarrier  control={control} field={'carrierId'} />
             </div>
-          </div>
-
-            <Button  type={'submit'} variant={"add"}>Создать</Button>
-
-
-        </form>
-
-    </div>
+      </FormLayouts>
   );
 }

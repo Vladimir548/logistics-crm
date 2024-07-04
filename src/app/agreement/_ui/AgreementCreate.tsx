@@ -22,6 +22,7 @@ import SelectCarrier from "@/app/(home)/create/registry-select/select/carrier/Se
 import InputCustom from "@/components/input/InputCustom";
 import InputDateCustom from "@/components/input/InputDateCustom";
 import {Button} from "@/components/buttons/Buttons";
+import FormLayouts from "@/app/layouts/FormLayouts";
 
 export default function AgreementCreate() {
   const idUser = getIdUser();
@@ -47,10 +48,8 @@ export default function AgreementCreate() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className={'m-2'}>
-        <div className="flex  gap-2 flex-wrap">
-          <div className="flex flex-col gap-y-2">
+      <FormLayouts handleFn={handleSubmit(onSubmit)} label={'Создать'} buttonVariant={'add'} >
+          <div >
             <Controller
                 control={control}
                 render={({field: {onChange, value}}) => (
@@ -60,7 +59,7 @@ export default function AgreementCreate() {
             />
           </div>
 
-          <div className="flex flex-col gap-y-2">
+          <div >
             <Controller
                 control={control}
                 render={({field: {onChange, value}}) => (
@@ -69,7 +68,7 @@ export default function AgreementCreate() {
                 name="route"
             />
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div >
             <Controller
                 name="dateOfDownload"
                 control={control}
@@ -79,7 +78,7 @@ export default function AgreementCreate() {
                 )}
             />
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div >
             <Controller
                 name="unloadingDate"
                 control={control}
@@ -89,7 +88,7 @@ export default function AgreementCreate() {
                 )}
             />
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div >
             <Controller
                 control={control}
                 render={({field: {onChange, value}}) => (
@@ -111,7 +110,7 @@ export default function AgreementCreate() {
                 name="amountOfPaymentToTheCarrier"
             />
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div >
             <Controller
                 name="dateOfPaymentToTheCarrier"
                 control={control}
@@ -121,7 +120,7 @@ export default function AgreementCreate() {
                 )}
             />
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div >
             <Controller
                 control={control}
                 render={({field: {onChange, value}}) => (
@@ -130,17 +129,14 @@ export default function AgreementCreate() {
                 name="paymentDeadlineToTheCarrier"
             />
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div >
             <SelectPaymentMethod<IAgreement> control={control} field={'methodOfPaymentToTheCarrier'}/>
           </div>
           <SelectRegistry control={control}/>
-          <div className="flex flex-col gap-y-2">
+          <div >
             <SelectCarrier control={control} field={"carrierId"} fieldContact={'carrierContactPersonId'}
                                        fieldDriver={'driverId'}/>
           </div>
-        </div>
-        <Button  type={'submit'} variant={'add'}>Создать</Button>
-      </form>
-    </div>
+      </FormLayouts>
   );
 }
