@@ -1,0 +1,14 @@
+
+
+.field{
+  outline: none;
+  width: 100%;
+  border: none;
+  background: #1f1f1f;
+  border-radius: 5px;
+  padding: 5px 5px 5px 35px ;
+  &:focus{
+    background: #343434;
+  }
+}
+

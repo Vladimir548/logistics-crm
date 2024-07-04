@@ -1,0 +1,71 @@
+
+.divTable {
+
+    width: 100%;
+
+}
+
+//.tr {
+//    display: flex;
+//}
+
+
+.tr {
+    width: fit-content;
+    height: 30px;
+}
+
+
+.th,
+.td {
+
+    padding: 0.25rem;
+}
+
+
+.th {
+    padding: 2px 10px;
+    position: relative;
+    font-weight: bold;
+    text-align: center;
+    height: 30px;
+}
+
+
+.td {
+    height: 30px;
+}
+
+.resizer {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background:#2E515D;
+    cursor: col-resize;
+    user-select: none;
+    touch-action: none;
+}
+
+.resizer.ltr {
+    right: 0;
+}
+
+.resizer.rtl {
+    left: 0;
+}
+
+.resizer.isResizing {
+    background: #ff0000;
+    opacity: 1;
+}
+
+@media (hover: hover) {
+    .resizer {
+        opacity: 1;
+    }
+
+    *:hover > .resizer {
+        opacity: 1;
+    }
+}

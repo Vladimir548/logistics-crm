@@ -1,0 +1,23 @@
+
+
+//.item_list{
+//  [data-slot='listbox'] > li {
+//    @apply z-[999] data-[focus=true]:bg-border-dark data-[hover=true]:bg-border-dark data-[hover=true]:text-text rounded-md data-[focus-visible=true]:outline-offset-0 data-[focus-visible=true]:outline-0 data-[focus-visible=true]:text-text
+//  }
+//}
+
+.SelectTrigger {
+  @apply relative h-[56px];
+  & p{
+    @apply text-sm absolute left-2 top-1/2 -translate-y-1/2 duration-300 ease-in-out text-text-dark ;
+  }
+  & > span {
+    @apply  self-end text-text
+  }
+}
+
+.SelectTrigger:not([data-placeholder]) > p,
+.SelectTrigger[data-state='open'] > p{
+@apply top-3 text-[11px] duration-300 ease-in-out text-text;
+
+}

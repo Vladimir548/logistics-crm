@@ -1,0 +1,49 @@
+.calendar [data-slot=title] {
+  @apply text-text;
+}
+.calendar [data-slot=title]:first-letter {
+  text-transform: uppercase;
+}
+.calendar [data-slot=header-wrapper],
+.calendar [data-slot=grid-header] {
+  @apply bg-secondary-cust;
+}
+.calendar [data-slot=grid-header] {
+  @apply border-b border-border-dark text-text-dark;
+}
+.calendar [data-slot=prev-button] {
+  @apply text-text data-[hover=true]:bg-border/40;
+}
+.calendar [data-slot=next-button] {
+  @apply text-text data-[hover=true]:bg-border/40;
+}
+.calendar [data-slot=grid-header-cell] {
+  @apply text-text-dark;
+}
+.calendar [data-slot=cell] > span {
+  @apply text-text;
+}
+.calendar [data-slot=cell] > span:hover {
+  @apply border-2 border-border  data-[hover=true]:bg-transparent;
+}
+.calendar [data-slot=cell] > [data-selected=true] {
+  @apply data-[selected=true]:data-[hover=true]:bg-border/80 data-[selected=true]:bg-border/50 data-[selected=true]:data-[hover=true]:text-text data-[selected=true]:data-[hover=true]:border-border/80;
+}
+.calendar [data-slot=cell] [data-outside-month=true] span {
+  @apply text-text-dark/70;
+}
+
+.input [data-slot=input-wrapper] {
+  @apply text-text rounded-md focus-within:hover:border-border duration-300 ease-in-out border-border-dark data-[hover=true]:border-border hover:border-border;
+}
+.input [data-slot=label] {
+  @apply text-text group-data-[filled-within=true]:text-text;
+}
+.input [data-slot=segment] {
+  @apply text-text focus:bg-border/40;
+}
+.input [data-slot=selector-button] {
+  @apply text-text data-[hover=true]:bg-border/40;
+}
+
+/*# sourceMappingURL=style.module.css.map */

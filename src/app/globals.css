@@ -1,33 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.select {
+  @apply w-[200px] h-[56px];
+}
+.select [data-slot=base] {
+  @apply bg-secondary-cust;
+}
+.select [data-slot=trigger] {
+  @apply border-border-dark rounded-md data-[focus=true]:border-border data-[hover=true]:border-border data-[open=true]:border-border;
+}
+.select [data-slot=label] {
+  @apply text-text-dark group-data-[focus=true]:text-text data-[open=true]:text-text group-data-[filled=true]:text-text;
+}
+.select [data-slot=selectorIcon] {
+  @apply text-text;
+}
+.select [data-slot=popoverContent] {
+  @apply bg-transparent data-[hover=true]:bg-border-dark;
+}
+.select [data-slot=content] {
+  @apply bg-transparent;
+}
+.select [data-slot=mainWrapper] {
+  @apply bg-secondary-cust text-text data-[hover=true]:bg-border-dark shadow shadow-border/80 rounded-md;
+}
+.select [data-slot=listbox] {
+  @apply bg-secondary-cust data-[focus=true]:bg-border-dark data-[hover=true]:bg-border-dark data-[hover=true]:text-text rounded-md;
+}
+.select [data-slot=listbox] > li {
+  @apply data-[focus=true]:bg-border-dark data-[hover=true]:bg-border-dark data-[hover=true]:text-text rounded-md;
+}
+.select [data-slot=value] {
+  @apply text-text;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #00CAE9;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: none;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
+/*# sourceMappingURL=globals.css.map */
