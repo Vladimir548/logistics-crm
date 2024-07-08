@@ -21,7 +21,6 @@ import SelectRegistry from "@/app/agreement/_ui/select/SelectRegistry";
 import SelectCarrier from "@/app/(home)/create/registry-select/select/carrier/SelectCarrier";
 import InputCustom from "@/components/input/InputCustom";
 import InputDateCustom from "@/components/input/InputDateCustom";
-import {Button} from "@/components/buttons/Buttons";
 import FormLayouts from "@/app/layouts/FormLayouts";
 
 export default function AgreementCreate() {
@@ -95,6 +94,7 @@ export default function AgreementCreate() {
                     <NumericFormat
                         customInput={InputCustom}
                         label={'Сумма оплаты перевозчику'}
+                        className={'w-[230px]'}
                         suffix=" ₽"
                         allowNegative
                         value={value}

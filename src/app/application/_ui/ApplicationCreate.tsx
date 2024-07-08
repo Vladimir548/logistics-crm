@@ -14,7 +14,6 @@ import {QueryApplication} from "@/app/api/query/query-application";
 import SelectCostumer from "@/app/(home)/create/registry-select/select/costumer/SelectCostumer";
 import InputCustom from "@/components/input/InputCustom";
 import SelectPaymentMethod from "@/app/(home)/create/registry-select/select/payment-method/SelectPaymentMethod";
-import {Button} from "@/components/buttons/Buttons";
 import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 import FormLayouts from "@/app/layouts/FormLayouts";
 
@@ -57,8 +56,7 @@ export default function ApplicationCreate() {
             />
           </div>
           <div >
-
-            <SelectCostumer<IApplication> control={control} field={'costumerId'} fieldContact={'costumerContactPersonId'} />
+            <SelectCostumer control={control} field={'costumerId'} fieldContact={'costumerContactPersonId'} />
           </div>
           <div >
             <Controller
