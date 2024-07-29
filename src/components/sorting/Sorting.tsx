@@ -3,20 +3,18 @@
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/select/Select';
 import { DATASORTREGISTRY, EnumSortOrder } from '@/data/data-sorting';
 import { useValueSorting } from '@/zustand/useValueSorting';
-import { useState } from 'react';
+import {useCallback} from 'react';
 import {SelectIcon} from "@radix-ui/react-select";
 import {FaSort} from "react-icons/fa";
 
 export default function Sorting({ field }: { field: string }) {
-  const { getField, getOrder } = useValueSorting();
-  const [initialized, setInitialized] = useState(false);
-  const handleValueChange = (order: EnumSortOrder) => {
-    if (!initialized) {
+  const { getField, getOrder,order } = useValueSorting();
+
+  const handleValueChange =useCallback((order: EnumSortOrder) => {
       getOrder(order);
       getField(field);
-    }
-    setInitialized(true);
-  };
+  },[field,order]);
+
   return (
     <div className={'flex gap-x-2  h-[20px] overflow-hidden items-center'}>
       <Select onValueChange={(value: EnumSortOrder) => handleValueChange(value)}>
