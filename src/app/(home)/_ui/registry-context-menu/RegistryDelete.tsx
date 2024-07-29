@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { QueryRegistry } from '@/app/api/query/query-registry';
 import { useContextMenu } from '@/zustand/useContextMenu';
 import {
@@ -15,15 +15,19 @@ import toast from 'react-hot-toast';
 import { MdDelete } from 'react-icons/md';
 import { ContextMenuItem } from '@/components/context-menu/ContextMenu';
 import {Button} from "@/components/buttons/Buttons";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 export default function RegistryDelete() {
   const { id } = useContextMenu();
-  const queryClient = useQueryClient();
+  const send = useReactQuerySubscription({query:'update-application', tracking:'application'})
   const { mutate } = useMutation({
     mutationKey: ['delete-registry'],
     mutationFn: () => QueryRegistry.delete(id),
     onSuccess: async () => {
       toast.success('Запись удалена');
-      await queryClient.invalidateQueries({ queryKey: ['all-registry'] });
+      send({
+        operation:'invalidate',
+        entity:['get-all-registry','get-all-application','get-all-agreement','get-all-invoice']
+      })
     },
     onError: () => {
       toast.error('Ошибка при удалении записи');

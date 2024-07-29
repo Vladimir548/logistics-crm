@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import {Inter, Roboto} from "next/font/google";
+import { Roboto} from "next/font/google";
 import "./globals.scss";
 import {ProviderNextUI} from "@/providers/ProviderNextUI";
 import ProviderQuery from "@/providers/ProviderQuery";
@@ -26,8 +26,8 @@ export default function RootLayout({
       <body className={roboto.className}>
     <ProviderNextUI>
       <ProviderQuery>
-        <Toaster position={'top-center'} />
-      <main>
+        <Toaster position={'bottom-right'} />
+      <main className={'h-full'}>
       {children}
       </main>
       </ProviderQuery>

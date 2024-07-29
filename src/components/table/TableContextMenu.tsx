@@ -7,6 +7,8 @@ import {
 } from "@/components/context-menu/ContextMenu";
 import {IContextItem} from "@/app/(home)/_ui/Registry";
 import {Row} from "@tanstack/react-table";
+import {VirtualItem} from "@tanstack/react-virtual";
+
 
 
 interface IRegistryContextMenu<T>  {
@@ -14,22 +16,29 @@ interface IRegistryContextMenu<T>  {
     children:React.ReactNode
     contextItem:IContextItem[]
     getDataForContext:(row:Row<T>) => void
+    virtualRow?:VirtualItem<Element>
 
 
 }
-export default function TableContextMenu<T>({row,children,contextItem,getDataForContext}:IRegistryContextMenu<T>) {
+export default function TableContextMenu<T>({row,children,contextItem,getDataForContext,virtualRow}:IRegistryContextMenu<T>) {
 
     return (
             <Dialog>
                 <ContextMenu >
-
                     <ContextMenuTrigger
                         asChild
                         key={row.id}
                         onContextMenu={() =>
                           getDataForContext(row)}
                     >
-                        <tr className={`h-[50px] cursor-pointer ease-linear duration-300 hover:bg-table-hover `}>
+                        <tr   key={row.id}
+                              style={{
+                                  display: 'flex',
+                                  position: 'absolute',
+                                  transform: `translateY(${virtualRow?.start}px)`,
+                                  width: '100%',
+                                  height: '50px'
+                              }}   className={` flex cursor-pointer ease-linear rounded-sm duration-300 hover:shadow-[inset_0px_0px_7px_3px] hover:shadow-text `}>
                         {children}
                         </tr>
                     </ContextMenuTrigger>

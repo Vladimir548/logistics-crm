@@ -81,23 +81,23 @@ export default function ReactPdf({ data }: { data: IRegistry }) {
     <Document>
       <Page style={styles.page}>
         <Text style={styles.header}>
-          Заявка-договор на перевозку груза № {data.agreement.contractNumber} от{' '}
+          Заявка-договор на перевозку груза № {data.application.agreement.contractNumber} от{' '}
           {data.createdAt?.split('T')[0]} г.
         </Text>
 
         <View style={styles.table}>
           {[
-            ['Грузоотправитель', data.agreement.carrier.name],
+            ['Грузоотправитель', data.application.agreement.carrier.name],
             ['Грузополучатель', data.application.costumer.name],
-            ['Маршрут', data.agreement.route],
-            ['Дата погрузки', data.agreement.dateOfDownload?.split('T')[0]],
+            ['Маршрут', data.application.agreement.route],
+            ['Дата погрузки', data.application.agreement.dateOfDownload?.split('T')[0]],
             ['Адрес погрузки', data.application.unloadingAddress],
             [
               'Контактное лицо, номер телефона',
-              data.agreement.carrierContactPerson.fullName,
-              data.agreement.carrierContactPerson.numberPhone,
+              data.application.agreement.carrierContactPerson.fullName,
+              data.application.agreement.carrierContactPerson.numberPhone,
             ],
-            ['Дата разгрузки', data.agreement.unloadingDate?.split('T')[0]],
+            ['Дата разгрузки', data.application.agreement.unloadingDate?.split('T')[0]],
             ['Адрес разгрузки', data.application.unloadingAddress],
             [
               'Контактное лицо, номер телефона',
@@ -108,9 +108,9 @@ export default function ReactPdf({ data }: { data: IRegistry }) {
             ['№ам/ прицеп марка', ''],
             [
               'ФИО водителя паспорт/телефон',
-              data.agreement.driver.fullName,
-              data.agreement.driver.passportNumberAndSeries,
-              data.agreement.driver.numberPhone,
+              data.application.agreement.driver.fullName,
+              data.application.agreement.driver.passportNumberAndSeries,
+              data.application.agreement.driver.numberPhone,
             ],
             ['Характер груза', data.application.weight],
             ['Ставка за перевозку, руб.', data.application?.invoice?.amountOfPaymentToUs],
@@ -176,15 +176,15 @@ export default function ReactPdf({ data }: { data: IRegistry }) {
 
           <View style={styles.signatureBlock}>
             <Text style={{ fontWeight: 'bold' }}>Перевозчик</Text>
-            <Text>{data.agreement.carrier.name}</Text>
-            <Text>Юридический адрес:{data.agreement.carrier.legalAndActualAddress}</Text>
-            <Text>ИНН: {data.agreement.carrier.inn}</Text>
-            <Text>КПП: {data.agreement.carrier.kpp}</Text>
-            <Text>ОГРН: {data.agreement.carrier.ogrn}</Text>
-            <Text>Расчетный счет: {data.agreement.carrier.cashAccount}</Text>
-            <Text>БИК: {data.agreement.carrier.bic}</Text>
-            <Text>Банк: {data.agreement.carrier.bank}</Text>
-            <Text>Корр. Счет: {data.agreement.carrier.checkingAccount}</Text>
+            <Text>{data.application.agreement.carrier.name}</Text>
+            <Text>Юридический адрес:{data.application.agreement.carrier.legalAndActualAddress}</Text>
+            <Text>ИНН: {data.application.agreement.carrier.inn}</Text>
+            <Text>КПП: {data.application.agreement.carrier.kpp}</Text>
+            <Text>ОГРН: {data.application.agreement.carrier.ogrn}</Text>
+            <Text>Расчетный счет: {data.application.agreement.carrier.cashAccount}</Text>
+            <Text>БИК: {data.application.agreement.carrier.bic}</Text>
+            <Text>Банк: {data.application.agreement.carrier.bank}</Text>
+            <Text>Корр. Счет: {data.application.agreement.carrier.checkingAccount}</Text>
             <Text>____________________</Text>
             <Text>(подпись)</Text>
           </View>

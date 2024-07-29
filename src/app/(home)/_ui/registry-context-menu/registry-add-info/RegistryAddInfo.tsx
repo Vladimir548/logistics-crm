@@ -20,13 +20,14 @@ export default function RegistryAddInfo() {
   return (
     <ContextMenuSub>
         <Button   className={'w-full '} variant={'add'}>
-      <ContextMenuSubTrigger>
+      <ContextMenuSubTrigger >
        <p>Добавление информации</p>
         <span>
           <IoIosArrowForward />
         </span>
       </ContextMenuSubTrigger>
         </Button>
+
       <ContextMenuSubContent
         sideOffset={30}
         className="w-52 border-border border-2 bg-secondary-cust "
