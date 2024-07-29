@@ -4,17 +4,18 @@ import { Control, Controller } from 'react-hook-form';
 
 import { IAgreement } from '@/interface/interface-agreement';
 import { useQuery } from '@tanstack/react-query';
-import {QueryRegistry} from "@/app/api/query/query-registry";
+
 import SelectCustom from "@/components/select/SelectCustom";
 import {SelectItem} from "@/components/select/Select";
+import {QueryApplication} from "@/app/api/query/query-application";
 
 interface ISelectRegistry {
   control: Control<IAgreement>;
 }
 export default function SelectRegistry({ control }: ISelectRegistry) {
-  const { data,isPending } = useQuery({
-    queryKey: ['get-registry-all'],
-    queryFn: () => QueryRegistry.getAll(),
+  const { data } = useQuery({
+    queryKey: ['get-all-application'],
+    queryFn: () => QueryApplication.getAll({}),
   });
   return (
 
@@ -26,22 +27,16 @@ export default function SelectRegistry({ control }: ISelectRegistry) {
                   label={'Номер заявки'}
                   onValueChange={onChange}
                   value={String(value)}
-                  defaultValue={!isPending ? String(value) : 'Загрузка...'}
+                  defaultValue={String(value)}
               >
-                  { data?.filter(val => val.agreement === null || undefined || '').map(value => (
+                  { data?.data?.filter(item => item.agreement === null).map(value => (
                       <SelectItem  key={value.id} value={String(value.id)}>
-                                 {`Заявка № ${value.application.applicationNumber}`}
+                                 {`Заявка № ${value.applicationNumber}`}
                              </SelectItem>
                   ))}
-
-                  {/*{data?.filter(val => val.agreement === null || undefined || '').map((value) => (*/}
-                  {/*    <SelectItem  key={value.id} value={String(value.id)}>*/}
-                  {/*        {`Заявка № ${value.application.applicationNumber}`}*/}
-                  {/*    </SelectItem>*/}
-                  {/*))}*/}
               </SelectCustom>
           )}
-          name={'registryId'}
+          name={'applicationId'}
         />
 
   );

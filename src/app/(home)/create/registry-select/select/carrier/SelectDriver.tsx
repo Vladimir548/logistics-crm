@@ -2,43 +2,32 @@
 
 import {Control, Controller, FieldValues, Path} from 'react-hook-form';
 
-import { useQuery } from '@tanstack/react-query';
 import {QueryDriver} from "@/app/api/query/QueryDriver";
-import SelectCustom from "@/components/select/SelectCustom";
-import {SelectItem} from "@/components/select/Select";
+import Combobox from "@/components/combobox/Combobox";
+import CarrierDriverCreate from "@/app/carrier/driver/_ui/CarrierDriverCreate";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
+import {useEffect} from "react";
+
 
 interface ISelectCarrierContact<T extends  FieldValues> {
   control: Control<T>;
-  id: string;
+  id: number;
   field:Path<T>
 }
 export default function SelectDriver<T extends FieldValues>({ control, id,field }: ISelectCarrierContact<T>) {
-  const { data,isPending } = useQuery({
-    queryKey: ['get-carrier-id-driver', id],
-    queryFn: () => QueryDriver.getCarrierIdDriver(Number(id)),
-    enabled: !!id,
-  });
-
+    const send = useReactQuerySubscription({query:'update-driver', tracking:'driver'})
+    useEffect(() => {
+        send({operation:'invalidate',entity:'get-all-driver'})
+    }, [send]);
   return (
     <div>
       <Controller
         control={control}
         render={({ field: { onChange, value } }) => (
-            <SelectCustom className={'w-[300px]'}
-                          disabled={!id}
-                          label={'Водитель'}
-                          onValueChange={onChange}
-                          value={String(value)}
-                          defaultValue={ value}
-            >
-                { data?.map((value) => (
-                    <SelectItem  key={value.id} value={String(value.id)}  >
-
-                             {value.fullName}
-
-
-                    </SelectItem>))}
-            </SelectCustom>
+            <Combobox enabled={!!id} label={'Водитель'} disabled={!id} controllerValue={value} onValueChange={onChange}
+            queryKey={['get-all-driver',id]} queryFn={(pageParam,search) =>QueryDriver.getCarrierIdDriver({query:search,offset:pageParam,id:id})} nameField={'fullName'}
+            addRecord={<CarrierDriverCreate id={id}/>}
+            />
         )}
         name={field}
       />

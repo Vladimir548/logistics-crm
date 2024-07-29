@@ -1,43 +1,37 @@
 'use client';
 
 import {Control, Controller, FieldValues, Path} from 'react-hook-form';
-import { useQuery } from '@tanstack/react-query';
+
 import {QueryContactCarrier} from "@/app/api/query/query-contact-carrier";
-import SelectCustom from "@/components/select/SelectCustom";
-import {SelectItem} from "@/components/select/Select";
+
+import Combobox from "@/components/combobox/Combobox";
+import CarrierContactCreate from "@/app/carrier/contact/_ui/CarrierContactCreate";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
+import {useEffect} from "react";
 
 
 interface ISelectCarrierContact<T extends FieldValues> {
   control: Control<T>;
-  id: string | null;
+  id: number | null;
   field:Path<T>
 }
 export default function SelectCarrierContact<T extends FieldValues>({ control, id,field }: ISelectCarrierContact<T>) {
-
-    const { data,isPending } = useQuery({
-    queryKey: ['get-carrier-id-contact', id],
-    queryFn: () => QueryContactCarrier.getCarrierIdContact(Number(id)),
-    enabled: !!id,
-  });
-
+    const send = useReactQuerySubscription({query:'update-carrier-contact', tracking:'carrier-contact'})
+    useEffect(() => {
+        send({operation:'invalidate',entity:'get-all-carrier-contact'})
+    }, [send]);
   return (
     <div>
       <Controller
         control={control}
         render={({ field: { onChange, value } }) => (
-            <SelectCustom className={'w-[300px]'}
-                          disabled={!id}
-                label={'Контактное лицо'}
-                          onValueChange={onChange}
-                          value={String(value)}
-                          defaultValue={!isPending ? String(value) : 'Загрузка...'}
-            >
-                {data?.map((value) => (
-                <SelectItem  key={value.id} value={String(value.id)} >
-                        {value.fullName}
-                </SelectItem>
-                ))}
-            </SelectCustom>
+            <Combobox label={'Контактное лицо'} disabled={!id} controllerValue={value} onValueChange={onChange}
+            queryKey={['get-all-carrier-contact',id]}
+                      queryFn={(pageParam, search) => QueryContactCarrier.getCarrierIdContact({id:Number(id),query:search,offset:pageParam})}
+                      nameField={'fullName'}
+                      addRecord={<CarrierContactCreate id={Number(id)} />} enabled={!!id}
+
+            />
         )}
         name={field}
       />

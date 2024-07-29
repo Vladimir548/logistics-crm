@@ -1,10 +1,10 @@
 'use client';
 
 import {Control, Controller, FieldValues, Path} from 'react-hook-form';
-import { useQuery } from '@tanstack/react-query';
 import {QueryContactCostumer} from "@/app/api/query/query-contact-costumer";
-import SelectCustom from "@/components/select/SelectCustom";
-import {SelectItem} from "@/components/select/Select";
+import CostumerContactCreate from "@/app/costumer/contact/_ui/CostumerContactCreate";
+import Combobox from "@/components/combobox/Combobox";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 import {useEffect} from "react";
 
 interface ISelectCostumerContact<T extends FieldValues> {
@@ -13,33 +13,30 @@ interface ISelectCostumerContact<T extends FieldValues> {
   field:Path<T>
 }
 export default function SelectCostumerContact<T extends FieldValues>({ control, id,field }: ISelectCostumerContact<T>) {
-  const { data, isPending } = useQuery({
-    queryKey: ['get-costumer-id-contact', id],
-    queryFn: () => QueryContactCostumer.getCostumerIdContact(id),
-    enabled: !!id,
-  });
+    const send = useReactQuerySubscription({query:'update-contact-costumer', tracking:'contact-costumer'})
+    useEffect(() => {
+        send({operation:'invalidate',entity:'get-costumer-id-contact'})
+    }, [send]);
   return (
     <div className={'flex flex-col gap-y-2'}>
 
         <Controller
           control={control}
           render={({ field: { onChange, value } }) => (
-              <SelectCustom  className={'w-[300px]'}
-                            disabled={!id}
-                            label={'Контактное лицо'}
-                            onValueChange={onChange}
-                            value={String(value)}
-                            defaultValue={String(value)}
-                             isLoading={isPending}
-              >
-                {data?.map((value) => (
-                    <SelectItem key={value.id} value={String(value.id)}>
-                      {value.fullName}
-                    </SelectItem>))}
-              </SelectCustom>
+
+              <Combobox
+                  disabled={!id}
+                  enabled={!!id}
+                  label={'Контактное лицо'}
+                  controllerValue={value}
+                  onValueChange={onChange}
+                  queryKey={['get-costumer-id-contact', id]}
+                  queryFn={( pageParam:number,search:string)=>QueryContactCostumer.getCostumerIdContact({id:id,take:3,offset:pageParam,query:search})}
+                  nameField={'fullName'} addRecord={<CostumerContactCreate id={id}/>}  />
           )}
           name={field}
         />
+
 
     </div>
   );

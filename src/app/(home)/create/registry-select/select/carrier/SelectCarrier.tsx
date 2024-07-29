@@ -1,11 +1,13 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import {  useQueryClient } from '@tanstack/react-query';
 
 import {Control, Controller, FieldValues, Path, useWatch} from 'react-hook-form';
 import {QueryCarrier} from "@/app/api/query/query-carrier";
 import SelectDriver from "@/app/(home)/create/registry-select/select/carrier/SelectDriver";
 import SelectCarrierContact from "@/app/(home)/create/registry-select/select/carrier/SelectCarrierContact";
-import SelectCustom from "@/components/select/SelectCustom";
-import {SelectItem} from "@/components/select/Select";
+import Combobox from "@/components/combobox/Combobox";
+import CarrierCreate from "@/app/carrier/_ui/CarrierCreate";
+import {useEffect} from "react";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 
 
 interface ISelectCarrier<T extends FieldValues> {
@@ -15,10 +17,10 @@ interface ISelectCarrier<T extends FieldValues> {
     fieldDriver?: Path<T>
 }
 export default function SelectCarrier<T extends  FieldValues>({ control,field,fieldContact,fieldDriver }: ISelectCarrier<T>) {
-  const { data, isPending } = useQuery({
-    queryKey: ['get-all-carrier'],
-    queryFn: () => QueryCarrier.getAll(),
-  });
+  const send = useReactQuerySubscription({query:'update-carrier', tracking:'carrier'})
+  useEffect(() => {
+    send({operation:'invalidate',entity:'get-all-carrier'})
+  }, [send]);
   const queryClient = useQueryClient();
   const carrierId = useWatch({
     control,
@@ -35,29 +37,19 @@ export default function SelectCarrier<T extends  FieldValues>({ control,field,fi
       <Controller
         control={control}
         render={({ field: { onChange, value } }) => (
-            <SelectCustom
-                label={'Перевозчик'}
-                className={'w-[300px]'}
-                onValueChange={onChange}
-                value={String(value)}
-                defaultValue={!isPending ? String(value) : 'Загрузка...'}
-            >
-                { data?.carrier.map((value) => (
-                    <SelectItem  key={value.id} value={String(value.id)}>
-                        {`${value.name}`}
-                    </SelectItem>
-                ))}
-            </SelectCustom>
+            <Combobox label={'Перевозчик'} controllerValue={value}  onValueChange={onChange}
+                     addRecord={<CarrierCreate />} queryKey={['get-all-carrier']}
+                      queryFn={(pageParam, search)=>QueryCarrier.getAll({offset:pageParam,query:search})} nameField={'name'} />
         )}
         name={field}
       />
 
         {fieldContact && (
-      <SelectCarrierContact control={control} id={String(carrierId)} field={fieldContact} />
+      <SelectCarrierContact  control={control} id={carrierId} field={fieldContact} />
         )}
         <>
             {fieldDriver && (
-      <SelectDriver control={control} id={String(carrierId)} field={fieldDriver} />
+      <SelectDriver control={control} id={carrierId} field={fieldDriver} />
             )}
         </>
     </div>
