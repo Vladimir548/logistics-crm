@@ -6,7 +6,7 @@ export default function Page() {
     return (
         <div>
             <HomeLayout>
-                <CarrierContactCreate/>
+                <CarrierContactCreate />
             </HomeLayout>
 
         </div>

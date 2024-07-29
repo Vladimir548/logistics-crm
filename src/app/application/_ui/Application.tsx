@@ -1,53 +1,27 @@
 'use client'
 
 import {QueryApplication} from "@/app/api/query/query-application";
-import {useQuery} from "@tanstack/react-query";
 import Table from "@/components/table/Table";
 import {ColumnsApplication} from "@/columns/ColumnsApplication";
 import TopLayouts from "@/app/layouts/TopLayouts";
-import {IContextItem} from "@/app/(home)/_ui/Registry";
-import ContextEditing from "@/components/context-menu/items/ContextEditing";
-import {useContextMenu} from "@/zustand/useContextMenu";
-import {Row} from "@tanstack/react-table";
-import {IApplication} from "@/interface/interface-application";
-import ContextChangeStatusApplication from "@/app/application/_ui/context-menu/ContextChangeStatusApplication";
-import ApplicationDelete from "@/app/application/_ui/context-menu/ApplicationDelete";
 import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 import {useEffect} from "react";
+import ApplicationContextMenu from "@/app/application/_ui/context-menu/ApplicationContextMenu";
+
 
 export default function Application() {
 
-    const {getNumberApplication,getStatusApplication,getId,id}=useContextMenu()
-    const contextItem:IContextItem[] = [
-        {
-            component:<ContextChangeStatusApplication />
-        },
-        {
-            component:<ContextEditing url={'/application'} id={id} />
-        }, {
-            component:<ApplicationDelete />
-        },
-    ]
-    const getDataForContext = (row: Row<IApplication>) => {
-        getId(row.original.id)
-        getStatusApplication(row.original.status);
-        getNumberApplication(row.original.applicationNumber);
+const {getDataForContext,contextItem} = ApplicationContextMenu()
 
-    };
-    const { data,isPending } = useQuery({
-        queryKey: ['get-all-applications'],
-        queryFn: () => QueryApplication.getAll(),
-
-    });
-    const send = useReactQuerySubscription({query:'update-applications', tracking:'up-application'})
+    const send = useReactQuerySubscription({query:'update-application', tracking:'application'})
     useEffect(() => {
-        send({operation:'invalidate',entity:'get-all-applications'})
+        send({operation:'invalidate',entity:'get-all-application'})
     }, [send]);
     return (
         <div>
             <TopLayouts url={'application'}/>
 
-            <Table data={data} isLoading={isPending} columns={ColumnsApplication} contextItem={contextItem} getDataForContext={getDataForContext}  />
+            <Table queryKey={['get-all-application']} queryFn={(pageParam,search)=>QueryApplication.getAll({query:search,pageParam:pageParam})}  columns={ColumnsApplication} contextItem={contextItem} getDataForContext={getDataForContext}  />
         </div>
     );
 };

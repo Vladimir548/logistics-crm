@@ -7,18 +7,24 @@ import { errorCatch } from '@/app/api/api.helper';
 import { IAccountNumber } from '@/interface/interface-account-number';
 import {QueryAccountNumber} from "@/app/api/query/query-account-number";
 import InputCustom from "@/components/input/InputCustom";
-import {Button} from "@/components/buttons/Buttons";
+
 import FormLayouts from "@/app/layouts/FormLayouts";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 
 export default function AccountNumberCreate() {
-  const { register, handleSubmit, control, reset } = useForm<IAccountNumber>({
+  const {  handleSubmit, control, reset } = useForm<IAccountNumber>({
   });
+  const send = useReactQuerySubscription({query:'update-account',tracking:'account'})
   const { mutate } = useMutation({
     mutationKey: ['create-account-number'],
     mutationFn: (data: IAccountNumber) => QueryAccountNumber.create(data),
     onSuccess: () => {
       reset();
-      toast.success('Запиись добавлена');
+      toast.success('Запись добавлена');
+      send({
+        operation:'invalidate',
+        entity:['get-all-account-number'],
+      })
     },
     onError: (error) => {
       const err = errorCatch(error);

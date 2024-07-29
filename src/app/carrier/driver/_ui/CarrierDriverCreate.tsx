@@ -6,25 +6,31 @@ import toast from 'react-hot-toast';
 import { errorCatch } from '@/app/api/api.helper';
 import { PatternFormat } from 'react-number-format';
 import { IDriver } from '@/interface/interface-driver';
-import HomeLayout from '@/app/layouts/HomeLayout';
+
 import {QueryDriver} from "@/app/api/query/QueryDriver";
 
 import SelectCarrier from "@/app/(home)/create/registry-select/select/carrier/SelectCarrier";
 import InputCustom from "@/components/input/InputCustom";
 import InputDateCustom from "@/components/input/InputDateCustom";
 import {parseDate} from "@internationalized/date";
-import {Button} from "@/components/buttons/Buttons";
+
 import FormLayouts from "@/app/layouts/FormLayouts";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 
-export default function CarrierDriverCreate() {
-  const { handleSubmit, control, reset } = useForm<IDriver>({});
-
+export default function CarrierDriverCreate({id}:{id?:number}) {
+  const { handleSubmit, control, reset } = useForm<IDriver>({
+      defaultValues:{
+          carrierId:id
+      }
+  });
+    const send = useReactQuerySubscription({query:'update-driver', tracking:'driver'})
   const { mutate } = useMutation({
     mutationKey: ['create-carrier-driver'],
     mutationFn: (data: IDriver) => QueryDriver.create(data),
     onSuccess: () => {
       reset();
-      toast.success('Запиись добавлена');
+      toast.success('Запись добавлена');
+        send({operation:'invalidate',entity:['get-all-driver']})
     },
     onError: (error) => {
       const err = errorCatch(error);
@@ -71,8 +77,9 @@ export default function CarrierDriverCreate() {
               />
             </div>
             <div >
-
+                {!id && (
               <SelectCarrier control={control} field={'carrierId'} />
+                )}
             </div>
             <div >
               <Controller

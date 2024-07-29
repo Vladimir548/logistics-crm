@@ -10,16 +10,22 @@ import {QueryContactCarrier} from "@/app/api/query/query-contact-carrier";
 import SelectCarrier from "@/app/(home)/create/registry-select/select/carrier/SelectCarrier";
 import InputCustom from "@/components/input/InputCustom";
 import FormLayouts from "@/app/layouts/FormLayouts";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 
-export default function CarrierContactCreate() {
-  const { handleSubmit, control, reset } = useForm<ICarrierContact>({});
-
+export default function CarrierContactCreate({id}:{id?:number}) {
+  const { handleSubmit, control, reset } = useForm<ICarrierContact>({
+      defaultValues:{
+          carrierId:id
+      }
+  });
+    const send = useReactQuerySubscription({query:'update-carrier-contact', tracking:'carrier-contact'})
   const { mutate } = useMutation({
     mutationKey: ['create-carrier-contact'],
     mutationFn: (data: ICarrierContact) => QueryContactCarrier.create(data),
     onSuccess: () => {
       reset();
-      toast.success('Запиись добавлена');
+      toast.success('Запись добавлена');
+        send({operation:'invalidate',entity:['get-all-carrier-contact']})
     },
     onError: (error) => {
       const err = errorCatch(error);
@@ -65,7 +71,10 @@ export default function CarrierContactCreate() {
               />
             </div>
             <div className={'flex gap-x-2'}>
+                {!id &&(
               <SelectCarrier  control={control} field={'carrierId'} />
+
+                )}
             </div>
       </FormLayouts>
   );

@@ -14,8 +14,8 @@ interface ISelectApplication {
 }
 export default function InvoiceSelectApplication({ control }: ISelectApplication) {
   const { data,isPending } = useQuery({
-    queryKey: ['get-all-applications'],
-    queryFn: () => QueryApplication.getAll(),
+    queryKey: ['get-all-application'],
+    queryFn: () => QueryApplication.getAll({}),
   });
   return (
     <div>
@@ -28,7 +28,7 @@ export default function InvoiceSelectApplication({ control }: ISelectApplication
                 value={String(value)}
                 defaultValue={!isPending ? String(value) : 'Загрузка...'}
             >
-                {data?.map((value) => (
+                {data?.data?.filter(item => item.invoice === null ).map((value) => (
                     <SelectItem key={value.id} value={String(value.id)}>
                         {`Заявка № ${value.applicationNumber}`}
                     </SelectItem>))}

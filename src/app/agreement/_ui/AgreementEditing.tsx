@@ -1,9 +1,9 @@
-
+'use client'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { NumericFormat } from 'react-number-format';
 import { useContextMenu } from '@/zustand/useContextMenu';
 import { IAgreement } from '@/interface/interface-agreement';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { errorCatch } from '@/app/api/api.helper';
 import { parseDate } from '@internationalized/date';
@@ -15,13 +15,14 @@ import SelectPaymentMethod
   from "@/app/(home)/create/registry-select/select/payment-method/SelectPaymentMethod";
 import SelectRegistry from "@/app/agreement/_ui/select/SelectRegistry";
 import FormLayouts from "@/app/layouts/FormLayouts";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 
 export default function AgreementEditing() {
-  const { contractAgreement } = useContextMenu();
+  const { id } = useContextMenu();
 
   const { data } = useQuery({
-    queryKey: ['get-agreement-contract'],
-    queryFn: () => QueryAgreement.getContract(contractAgreement),
+    queryKey: ['get-agreement-contract',id],
+    queryFn: () => QueryAgreement.getContract(Number(id)),
   });
   const {  handleSubmit, control,  } = useForm<IAgreement>({
     defaultValues: {
@@ -31,13 +32,16 @@ export default function AgreementEditing() {
       unloadingDate: data?.unloadingDate?.split('T')[0],
     },
   });
-  const queryClient = useQueryClient();
+    const send = useReactQuerySubscription({query:'update-agreement', tracking:'agreement'})
   const { mutate } = useMutation({
-    mutationKey: ['update-application'],
-    mutationFn: (data: IAgreement) => QueryAgreement.update(data, contractAgreement),
+    mutationKey: ['update-agreement'],
+    mutationFn: (data: IAgreement) => QueryAgreement.update(data, id),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['get-all-agreement', 'all-registry'] });
-      toast.success('Запиись обнавлена');
+      toast.success('Запись обнавлена');
+        send({
+            operation:'invalidate',
+            entity:['get-all-agreement','get-all-registry','get-all-invoice'],
+        })
     },
     onError: (error) => {
       const err = errorCatch(error);

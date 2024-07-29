@@ -9,22 +9,22 @@ import { errorCatch } from '@/app/api/api.helper';
 
 import {  PatternFormat } from 'react-number-format';
 import { ICarrier } from '@/interface/interface-carrier';
-
-import HomeLayout from '@/app/layouts/HomeLayout';
 import {QueryCarrier} from "@/app/api/query/query-carrier";
 import InputCustom from "@/components/input/InputCustom";
-import {Button} from "@/components/buttons/Buttons";
+
 import FormLayouts from "@/app/layouts/FormLayouts";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 
 export default function CarrierCreate() {
-  const { register, handleSubmit, control, reset } = useForm<ICarrier>({});
-
+  const {  handleSubmit, control, reset } = useForm<ICarrier>({});
+    const send = useReactQuerySubscription({query:'update-carrier', tracking:'carrier'})
   const { mutate } = useMutation({
     mutationKey: ['create-carrier'],
     mutationFn: (data: ICarrier) => QueryCarrier.create(data),
     onSuccess: () => {
       reset();
-      toast.success('Запиись добавлена');
+      toast.success('Запись добавлена');
+        send({operation:'invalidate',entity:['get-all-carrier']})
     },
     onError: (error) => {
       const err = errorCatch(error);

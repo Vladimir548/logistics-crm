@@ -13,7 +13,7 @@ import {QueryApplication} from "@/app/api/query/query-application";
 import SelectCostumer from "@/app/(home)/create/registry-select/select/costumer/SelectCostumer";
 import SelectPaymentMethod from "@/app/(home)/create/registry-select/select/payment-method/SelectPaymentMethod";
 import {useEffect} from "react";
-import {Button} from "@/components/buttons/Buttons";
+
 import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 import FormLayouts from "@/app/layouts/FormLayouts";
 
@@ -23,19 +23,16 @@ export default function ApplicationEditing() {
   useEffect(()=>{
 
   },[id])
-  const send = useReactQuerySubscription({query:'update-applications',tracking:'up-application'})
+    const send = useReactQuerySubscription({query:'update-application', tracking:'application'})
   const {  handleSubmit, control }  =  useForm<IApplication>({
-    defaultValues: async () => QueryApplication.getNumber( String(id)),
+    defaultValues: async () => QueryApplication.getNumber(id),
   });
   const { mutate } = useMutation({
     mutationKey: ['update-application'],
     mutationFn: (data: IApplication) => QueryApplication.update(data, String(id)),
-    onSuccess: async () => {
+    onSuccess: () => {
       toast.success('Запись обновлена');
-      send({
-        operation:'invalidate',
-        entity:['get-all-applications','all-registry'],
-      })
+        send({operation:'invalidate',entity:['get-all-application','get-all-registry']})
     },
     onError: (error) => {
       const err = errorCatch(error);

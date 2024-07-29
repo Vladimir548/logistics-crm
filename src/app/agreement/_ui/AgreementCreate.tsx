@@ -22,6 +22,7 @@ import SelectCarrier from "@/app/(home)/create/registry-select/select/carrier/Se
 import InputCustom from "@/components/input/InputCustom";
 import InputDateCustom from "@/components/input/InputDateCustom";
 import FormLayouts from "@/app/layouts/FormLayouts";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 
 export default function AgreementCreate() {
   const idUser = getIdUser();
@@ -30,12 +31,17 @@ export default function AgreementCreate() {
       userId: Number(idUser),
     },
   });
+    const send = useReactQuerySubscription({query:'update-agreement', tracking:'agreement'})
   const { mutate } = useMutation({
     mutationKey: ['create-agreement'],
     mutationFn: (data: IAgreement) => QueryAgreement.create(data),
     onSuccess: () => {
       reset();
-      toast.success('Запиись добавлена');
+      toast.success('Запись добавлена');
+        send({
+            operation:'invalidate',
+            entity:['get-all-agreement','get-all-registry','get-all-invoice'],
+        })
     },
     onError: (error) => {
       const err = errorCatch(error);

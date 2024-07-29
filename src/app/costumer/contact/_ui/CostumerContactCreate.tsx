@@ -6,21 +6,28 @@ import toast from 'react-hot-toast';
 import { errorCatch } from '@/app/api/api.helper';
 import { ICostumerContact } from '@/interface/interface-costumer-contact';
 import { PatternFormat } from 'react-number-format';
-import HomeLayout from '@/app/layouts/HomeLayout';
 import {QueryContactCostumer} from "@/app/api/query/query-contact-costumer";
 import SelectCostumer from "@/app/(home)/create/registry-select/select/costumer/SelectCostumer";
 import InputCustom from "@/components/input/InputCustom";
-import {Button} from "@/components/buttons/Buttons";
+import FormLayouts from "@/app/layouts/FormLayouts";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 
-export default function CostumerContactCreate() {
-  const { register, handleSubmit, control, reset } = useForm<ICostumerContact>({});
 
+
+export default function CostumerContactCreate({id}:{id?:number}) {
+  const {  handleSubmit, control, reset } = useForm<ICostumerContact>({
+      defaultValues:{
+          costumerId:id
+      }
+  });
+    const send = useReactQuerySubscription({query:'update-contact-costumer', tracking:'contact-costumer'})
   const { mutate } = useMutation({
-    mutationKey: ['create-costumer'],
+    mutationKey: ['create-costumer-contact'],
     mutationFn: (data: ICostumerContact) => QueryContactCostumer.create(data),
     onSuccess: () => {
       reset();
-      toast.success('Запиись добавлена');
+      toast.success('Запись добавлена');
+        send({operation:'invalidate',entity:['get-all-costumer-contact','get-costumer-id-contact']})
     },
     onError: (error) => {
       const err = errorCatch(error);
@@ -31,8 +38,8 @@ export default function CostumerContactCreate() {
     mutate(data);
   };
   return (
-    <div>
-        <form onSubmit={handleSubmit(onSubmit)} className={'m-2'}>
+      <FormLayouts  buttonVariant={'add'} handleFn={handleSubmit(onSubmit)} label={'Создать'}>
+
           <div className="flex  gap-2 flex-wrap">
             <div className={'flex flex-col gap-x-2'}>
               <Controller
@@ -68,14 +75,13 @@ export default function CostumerContactCreate() {
               />
             </div>
             <div className={'flex flex-col gap-x-2'}>
-
+                {!id && (
               <SelectCostumer control={control} field={'costumerId'}/>
+                )}
             </div>
           </div>
-            <Button  type={'submit'} variant={'add'}>Создать</Button>
 
-        </form>
 
-    </div>
+      </FormLayouts>
   );
 }

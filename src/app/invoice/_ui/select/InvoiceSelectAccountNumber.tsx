@@ -14,7 +14,7 @@ interface ISelectAccountNumber {
 export default function InvoiceSelectAccountNumber({ control }: ISelectAccountNumber) {
   const { data } = useQuery({
     queryKey: ['get-all-account-number'],
-    queryFn: () => QueryAccountNumber.getAll(),
+    queryFn: () => QueryAccountNumber.getAll({}),
   });
   const queryClient = useQueryClient();
   const applicationId = useWatch({
@@ -38,7 +38,7 @@ export default function InvoiceSelectAccountNumber({ control }: ISelectAccountNu
                   value={String(value)}
                      defaultValue={String(value)}
               >
-                  {  data?.map((value) => (
+                  {  data?.data.map((value) => (
                       <SelectItem  key={value.id} value={String(value.id)}>
                           {value.account}
                       </SelectItem>))}

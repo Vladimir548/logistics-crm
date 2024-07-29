@@ -1,8 +1,8 @@
-
+'use client'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { NumericFormat } from 'react-number-format';
 import { useContextMenu } from '@/zustand/useContextMenu';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { errorCatch } from '@/app/api/api.helper';
 import { IInvoice } from '@/interface/interface-invoice';
@@ -14,25 +14,26 @@ import InvoiceSelectApplication from "@/app/invoice/_ui/select/InvoiceSelectAppl
 import InvoiceSelectAccountNumber from "@/app/invoice/_ui/select/InvoiceSelectAccountNumber";
 import SelectPaymentMethod from "@/app/(home)/create/registry-select/select/payment-method/SelectPaymentMethod";
 import FormLayouts from "@/app/layouts/FormLayouts";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 export default function InvoiceEditing() {
-  const { numberInvoice } = useContextMenu();
+  const { id } = useContextMenu();
   const { data } = useQuery({
     queryKey: ['get-number-invoice'],
-    queryFn: () => QueryInvoice.getNumber(numberInvoice),
+    queryFn: () => QueryInvoice.getNumber(id),
   });
-  const { register, handleSubmit, control, reset } = useForm<IInvoice>({
+  const { handleSubmit, control } = useForm<IInvoice>({
     defaultValues: {
       ...data,
-      dateOfPaymentToUs: data?.dateOfPaymentToUs.split('T')[0],
+      dateOfPaymentToUs: data?.dateOfPaymentToUs?.split('T')[0],
     },
   });
-  const queryClient = useQueryClient();
+    const send = useReactQuerySubscription({query:'update-invoice', tracking:'invoice'})
   const { mutate } = useMutation({
     mutationKey: ['update-invoice'],
-    mutationFn: (data: IInvoice) => QueryInvoice.update(data, numberInvoice),
+    mutationFn: (data: IInvoice) => QueryInvoice.update(data, id),
     onSuccess: async () => {
-      toast.success('Запиись обнавлена');
-      await queryClient.invalidateQueries({ queryKey: ['get-all-invoice', 'all-registry'] });
+      toast.success('Запись обнавлена');
+        send({operation:'invalidate',entity:['get-all-application','get-all-registry','get-all-invoice','get-number-invoice']})
     },
     onError: (error) => {
       const err = errorCatch(error);

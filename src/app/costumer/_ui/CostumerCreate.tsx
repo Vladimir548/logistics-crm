@@ -9,16 +9,21 @@ import { PatternFormat } from 'react-number-format';
 import {QueryCostumer} from "@/app/api/query/QueryCostumer";
 import InputCustom from "@/components/input/InputCustom";
 import FormLayouts from "@/app/layouts/FormLayouts";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 
 export default function CostumerCreate() {
   const { handleSubmit, control, reset } = useForm<ICostumer>({});
-
+    const send = useReactQuerySubscription({query:'update-costumer', tracking:'costumer'})
   const { mutate } = useMutation({
     mutationKey: ['create-costumer'],
     mutationFn: (data: ICostumer) => QueryCostumer.create(data),
     onSuccess: () => {
       reset();
-      toast.success('Запиись добавлена');
+      toast.success('Запись добавлена');
+      send({
+          operation:'invalidate',
+          entity:['get-all-costumer', 'costumer-get-all']
+      })
     },
     onError: (error) => {
       const err = errorCatch(error);
@@ -29,7 +34,8 @@ export default function CostumerCreate() {
     mutate(data);
   };
   return (
-      <FormLayouts buttonVariant={'add'} handleFn={handleSubmit(onSubmit)} label={'Создать'}>
+
+      <FormLayouts  buttonVariant={'add'} handleFn={handleSubmit(onSubmit)} label={'Создать'}>
             <div >
               <Controller
                   control={control}
@@ -141,7 +147,7 @@ export default function CostumerCreate() {
                   name="bic"
               />
             </div>
-
       </FormLayouts>
+
   );
 }

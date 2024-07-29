@@ -3,7 +3,7 @@
 import { getIdUser } from '@/services/auth/auth.helper';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { errorCatch } from '@/app/api/api.helper';
 import { QueryInvoice } from '@/app/api/query/query-invoice';
@@ -16,22 +16,23 @@ import InputDateCustom from "@/components/input/InputDateCustom";
 import {parseDate} from "@internationalized/date";
 import SelectPaymentMethod from "@/app/(home)/create/registry-select/select/payment-method/SelectPaymentMethod";
 import FormLayouts from "@/app/layouts/FormLayouts";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 
 export default function InvoiceCreate() {
   const idUser = getIdUser();
-  const { register, handleSubmit, control, reset } = useForm<IInvoice>({
+  const {  handleSubmit, control, reset } = useForm<IInvoice>({
     defaultValues: {
       userId: Number(idUser),
     },
   });
-  const queryClient = useQueryClient();
+  const send = useReactQuerySubscription({query:'update-invoice', tracking:'invoice'})
   const { mutate } = useMutation({
     mutationKey: ['create-invoice'],
     mutationFn: (data: IInvoice) => QueryInvoice.create(data),
     onSuccess: async () => {
       reset();
-      await queryClient.invalidateQueries({ queryKey: ['get-all-invoice'] });
-      toast.success('Запиись добавлена');
+      send({operation:'invalidate',entity:['get-all-application','get-all-registry','get-all-invoice']})
+      toast.success('Запись добавлена');
     },
     onError: (error) => {
       const err = errorCatch(error);

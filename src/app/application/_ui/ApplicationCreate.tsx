@@ -24,14 +24,14 @@ export default function ApplicationCreate() {
       userId: Number(idUser),
     },
   });
-  const send = useReactQuerySubscription({query:'update-applications', tracking:'up-application'})
+  const send = useReactQuerySubscription({query:'update-application', tracking:'application'})
   const { mutate } = useMutation({
     mutationKey: ['create-application'],
     mutationFn: (data: IApplication) => QueryApplication.create(data),
     onSuccess: () => {
-      send({operation:'invalidate',entity:['get-all-applications','all-registry']})
+      send({operation:'invalidate',entity:['get-all-application','get-all-registry']})
       reset();
-      toast.success('Запиись добавлена');
+      toast.success('Запись добавлена');
     },
     onError: (error) => {
       const err = errorCatch(error);
@@ -45,7 +45,7 @@ export default function ApplicationCreate() {
 
   };
   return (
-   <FormLayouts buttonVariant={'add'} handleFn={handleSubmit(onSubmit)} label={'Создать'}>
+   <FormLayouts  buttonVariant={'add'} handleFn={handleSubmit(onSubmit)} label={'Создать'}>
           <div >
             <Controller
                 control={control}

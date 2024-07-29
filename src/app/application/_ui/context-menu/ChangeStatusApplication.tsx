@@ -12,20 +12,16 @@ import { QueryApplication } from '@/app/api/query/query-application';
 import SelectCustom from "@/components/select/SelectCustom";
 import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 
-export default function ContextChangeStatusApplication() {
-  const send = useReactQuerySubscription({query:'update-applications',tracking:'up-application'})
-  const { id, statusApplication } = useContextMenu();
-  console.log(statusApplication)
+export default function ChangeStatusApplication() {
+  const send = useReactQuerySubscription({query:'update-application', tracking:'application'})
+  const { statusApplication,numberApplication } = useContextMenu();
   const { mutate } = useMutation({
     mutationKey: ['change-status'],
     mutationFn: (statusOrder: StatusOrder) =>
-      QueryApplication.changeStatus(id, statusOrder),
+      QueryApplication.changeStatus(numberApplication, statusOrder),
     onSuccess: async () => {
       toast.success('Статус заявки изменен');
-      send({
-        operation:'invalidate',
-        entity:['get-all-applications','all-registry'],
-      })
+      send({operation:'invalidate',entity:['get-all-application','get-all-registry']})
     },
   });
 
@@ -38,7 +34,7 @@ export default function ContextChangeStatusApplication() {
       onSelect={(e: Event) => e.preventDefault()}
       className={'flex flex-col gap-y-2 w-full'}
     >
-      <SelectCustom  label={'Статус заявки'}  defaultValue={statusApplication} onValueChange={handleChangeStatus}>
+      <SelectCustom disabled={!numberApplication}  label={'Статус заявки'}  defaultValue={statusApplication === 'DEFAULT' ? '' : statusApplication} onValueChange={handleChangeStatus}>
         {DATASTATUSORDER?.map((val) => <SelectItem key={val.value} value={val.value}> {val.label}</SelectItem>)}
       </SelectCustom>
     </ContextMenuItem>

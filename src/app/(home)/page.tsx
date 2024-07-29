@@ -7,7 +7,7 @@ import {Suspense} from "react";
 export default function Home() {
   return (
       <>
-      <HomeLayout>
+      <HomeLayout scroll={false}>
         <Suspense fallback={'Загрузка...'}>
 
     <Registry/>

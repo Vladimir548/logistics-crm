@@ -4,7 +4,7 @@ import HomeLayout from "@/app/layouts/HomeLayout";
 export default function Page() {
     return (
         <div>
-            <HomeLayout>
+            <HomeLayout scroll={false}>
             <Application/>
             </HomeLayout>
         </div>
