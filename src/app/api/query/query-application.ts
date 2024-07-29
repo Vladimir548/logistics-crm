@@ -7,14 +7,24 @@ export const QueryApplication = {
     const { data } = await instance.post<IApplication>('/application/create', dto);
     return data as IApplication;
   },
-  async getAll() {
-    const { data } = await instance.get<IApplicationResponse>('/application/all');
+  async getAll({take,pageParam,query}: {
+    take?: number,
+    pageParam?: number,
+    query?: string
+  }) {
+    const { data } = await instance.get<IApplicationResponse>('/application/all', {
+      params:{
+        take,
+        offset:pageParam,
+        query
+      }
+    });
     return data as IApplicationResponse;
   },
-  async getNumber(number: string) {
+  async getNumber(id: number) {
     const { data } = await instance.get<IApplication>('/application/number', {
       params: {
-        number: number,
+        id,
       },
     });
     return data as IApplication;
@@ -27,9 +37,22 @@ export const QueryApplication = {
     const { data } = await instance.post<IApplication>(`/application/delete/${number}`);
     return data as IApplication;
   },
-  async changeStatus(id: number, status?: StatusOrder) {
+  async user({id,take,pageParam}: {
+    id:number
+    take?: number,
+    pageParam?: number,
+  }) {
+    const {data} = await instance.get<IApplicationResponse>(`/application/user/${id}`,{
+      params:{
+        take,
+        offset:pageParam
+      }
+    });
+    return data as IApplicationResponse;
+  },
+  async changeStatus(number: string, status?: StatusOrder) {
     const query = {
-      id,
+      number,
       status,
     };
     const { data } = await instance.post<IApplication>(`/application/change-status`, query);

@@ -2,7 +2,7 @@ import { instance } from '@/app/api/axios';
 import { IRegistry, IRegistryResponse, StatusOrder } from '@/interface/interface-registry';
 import { IAddTickets } from '@/app/(home)/_ui/registry-context-menu/registry-add-info/RegistryTickets';
 interface IQueryAllParams {
-  query: string | null;
+  query?: string | null;
   field?: string;
   order?: string;
   take?: number;
@@ -30,9 +30,23 @@ export const QueryRegistry = {
 
     return data as IRegistryResponse;
   },
-  async getAll() {
-    const { data } = await instance.get<IRegistry[]>(`/registry/all`);
-    return data as IRegistry[];
+  async getAll({take,pageParam,query,order,field}: {
+    take?: number,
+    pageParam?: number,
+    query?: string,
+    order?:string,
+    field?:string
+  }) {
+    const { data } = await instance.get<IRegistryResponse>(`/registry/all`, {
+      params:{
+        take,
+        offset:pageParam,
+        query,
+        order,
+        field
+      }
+    });
+    return data as IRegistryResponse;
   },
   async getId(id: number) {
     if (id) {
