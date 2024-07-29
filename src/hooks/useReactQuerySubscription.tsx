@@ -24,16 +24,13 @@ export const useReactQuerySubscription =  ({ query, tracking }: ISubscription) =
     useEffect(() => {
         socket.current = io('http://localhost:5000/');
         socket.current.on('connect', () => {
-            console.log('connect');
+            console.log('connect ws');
         });
         const handleEvent =  (data: WebSocketEvent) => {
-            console.log('received event', data);
+
             const queryKeys = Array.isArray(data.entity) ? data.entity : [data.entity];
-            console.log(data.entity)
-            console.log(data.operation)
 
             if (data.operation === 'invalidate') {
-                console.log('обновление кеша');
                 queryKeys.forEach(key => {
                   queryClient.invalidateQueries({queryKey:[key]})
                 })
@@ -56,7 +53,6 @@ export const useReactQuerySubscription =  ({ query, tracking }: ISubscription) =
     }, [queryClient, tracking]);
 
     const send = (input: WebSocketEvent) => {
-        console.log('Sending event:', query, input);
         socket.current?.emit(query, input);
     };
 
