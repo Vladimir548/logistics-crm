@@ -1,22 +1,24 @@
 
 'use client'
 
-import {useQuery} from "@tanstack/react-query";
 import {QueryApplication} from "@/app/api/query/query-application";
-import {ScrollArea, ScrollBar} from "@/components/scroll-area/ScrollArea";
-import React from "react";
+
+import React, {useEffect} from "react";
 import Table from "@/components/table/Table";
 import {ColumnsApplication} from "@/columns/ColumnsApplication";
+import ApplicationContextMenu from "@/app/application/_ui/context-menu/ApplicationContextMenu";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 
-export default function UserApplication({id}: {id: string}) {
-    const {data,isPending} = useQuery({
-        queryKey:['get-application-user'],
-        queryFn:()=>QueryApplication.user(id)
-    })
+export default function UserApplication({id}: {id: number}) {
+    const {getDataForContext,contextItem} = ApplicationContextMenu()
+    const send = useReactQuerySubscription({query:'update-application', tracking:'application'})
+    useEffect(() => {
+        send({operation:'invalidate',entity:'get-all-application'})
+    }, [send]);
     return (
-        <ScrollArea className={' w-full h-full  '}>
-           <Table data={data} columns={ColumnsApplication} isLoading={isPending} />
-            <ScrollBar  orientation="horizontal" />
-        </ScrollArea>
+        <div>
+           <Table queryKey={['get-all-application']} queryFn={(pageParam)=>QueryApplication.user({id:id,pageParam:pageParam})}  columns={ColumnsApplication} contextItem={contextItem} getDataForContext={getDataForContext} />
+
+        </div>
     );
 };

@@ -12,7 +12,7 @@ interface ITabData {
     component:ReactElement
 }
 
-export default function ProfileUserData({id}:{id:string}) {
+export default function ProfileUserData({id}:{id:number}) {
     const TabData:ITabData[] = [
         {
             label:'Заявки',

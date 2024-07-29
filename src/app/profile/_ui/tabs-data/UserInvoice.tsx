@@ -1,18 +1,20 @@
-import {useQuery} from "@tanstack/react-query";
+
 import {ColumnsInvoice} from "@/columns/ColumnsInvoice";
 import Table from "@/components/table/Table";
-import {ScrollArea, ScrollBar} from "@/components/scroll-area/ScrollArea";
 import {QueryInvoice} from "@/app/api/query/query-invoice";
+import InvoiceContextMenu from "@/app/invoice/_ui/context-menu/InvoiceContextMenu";
+import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
+import {useEffect} from "react";
 
-export default function UserInvoice({id}:{id:string}) {
-    const {data,isPending} = useQuery({
-        queryKey:['get-invoice-user'],
-        queryFn:()=>QueryInvoice.user(id)
-    })
+export default function UserInvoice({id}:{id:number}) {
+    const {getDataForContext,contextItem} = InvoiceContextMenu()
+    const send = useReactQuerySubscription({query:'update-invoice', tracking:'invoice'})
+    useEffect(() => {
+        send({operation:'invalidate',entity:'get-all-invoice'})
+    }, [send]);
     return (
-        <ScrollArea className={' w-full h-full  '}>
-            <Table data={data} columns={ColumnsInvoice} isLoading={isPending} />
-            <ScrollBar  orientation="horizontal" />
-        </ScrollArea>
+
+            <Table queryKey={['get-all-invoice']} queryFn={(page) => QueryInvoice.user({id:id,page})} columns={ColumnsInvoice} contextItem={contextItem} getDataForContext={getDataForContext} />
+
     );
 };
