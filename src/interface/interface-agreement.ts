@@ -3,9 +3,15 @@ import { ICarrierContact } from '@/interface/interface-carrier-contact';
 import { IDriver } from '@/interface/interface-driver';
 import { PaymentMethodEnum } from '@/interface/interface-payment-method';
 import { IUser } from '@/interface/interface-user';
-import { IRegistry, StatusOrder } from '@/interface/interface-registry';
+import { StatusOrder } from '@/interface/interface-registry';
+import {IApplication} from "@/interface/interface-application";
 
-export type IAgreementResponse = IAgreement[];
+export type IAgreementResponse = {
+  data: IApplication[];
+  count: number;
+  takeCount: number;
+  totalPage: number;
+};
 
 export interface IAgreement {
   id: number;
@@ -27,7 +33,7 @@ export interface IAgreement {
   route: string;
   user: IUser;
   userId: number;
-  registryId: number;
-  registry: IRegistry;
+  applicationId: number;
+  application: IApplication;
   status: StatusOrder;
 }

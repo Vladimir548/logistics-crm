@@ -1,5 +1,12 @@
 import { ICarrier } from '@/interface/interface-carrier';
 
+export type TDriverResponse = {
+  data: IDriver[];
+  count: number;
+  takeCount: number;
+  totalPage:number
+};
+
 export interface IDriver {
   id: number;
   fullName: string;

@@ -1,7 +1,8 @@
 export type CarrierResponse = {
-  carrier: ICarrier[];
+  data: ICarrier[];
   count: number;
   takeCount: number;
+  totalPage:number
 };
 
 export interface ICarrier {

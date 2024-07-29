@@ -1,7 +1,8 @@
 export type CostumersResponse = {
-  costumers: ICostumer[];
+  data: ICostumer[];
   count: number;
   takeCount: number;
+  totalPage: number;
 };
 
 export interface ICostumer {

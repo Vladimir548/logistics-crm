@@ -1,12 +1,11 @@
 import { IApplication } from '@/interface/interface-application';
-import { IAgreement } from '@/interface/interface-agreement';
+
 import { IInvoice } from '@/interface/interface-invoice';
 
 export type IRegistryResponse = {
-  registry: IRegistry[];
+  data: IRegistry[];
   count: number;
   takeCount: number;
-  page: number;
   totalPage: number;
 };
 
@@ -20,7 +19,6 @@ export interface IRegistry {
   advancePaymentToTheCarrier: string;
   comment: string;
   application: IApplication;
-  agreement: IAgreement;
   invoice: IInvoice;
   receiptFromTheCarrier: string;
   receiptFromUsToTheCustomer: string;

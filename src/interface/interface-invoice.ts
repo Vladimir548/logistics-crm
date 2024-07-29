@@ -3,9 +3,16 @@ import { IAccountNumber } from '@/interface/interface-account-number';
 
 import { IApplication } from '@/interface/interface-application';
 
-export type IInvoiceResponse = IInvoice[];
+export type IInvoiceResponse = {
+  data:IInvoice[],
+  count: number;
+  takeCount: number;
+  totalPage: number;
+
+};
 
 export interface IInvoice {
+  id:number
   invoiceNumber: string;
   amountOfPaymentToUs: string;
   paymentDeadlineToUs: string;
