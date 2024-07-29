@@ -1,0 +1,26 @@
+'use client'
+import * as Tooltip from '@radix-ui/react-tooltip';
+import React from "react";
+
+interface ITooltipProps {
+    children: React.ReactNode;
+    label:string
+}
+
+export default function TooltipCustom({children,label}:ITooltipProps) {
+    return (
+        <Tooltip.Provider  >
+            <Tooltip.Root  >
+                <Tooltip.Trigger asChild >
+                    {children}
+                </Tooltip.Trigger>
+<Tooltip.Portal>
+                <Tooltip.Content sideOffset={2} className={'h-full z-10 break-all  w-full bg-secondary-cust text-text backdrop-blur-lg max-w-[400px] rounded-lg border border-text  p-2 '}
+                                  avoidCollisions={true} >
+                    {label}
+                </Tooltip.Content>
+</Tooltip.Portal>
+            </Tooltip.Root>
+        </Tooltip.Provider>
+    );
+};
