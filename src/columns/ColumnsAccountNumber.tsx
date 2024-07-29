@@ -5,7 +5,7 @@ const columnHelper = createColumnHelper<IAccountNumber>();
 
 export const ColumnsAccountNumber = [
   columnHelper.accessor('account', {
-    header: () => <h3 className={'table_header'}>Номер счета</h3>,
-    cell: (info) => <span>{info?.getValue()}</span>,
+    header: () => <h3>Номер счета</h3>,
+    cell: (info) => <span>{info.getValue()}</span>,
   }),
 ];

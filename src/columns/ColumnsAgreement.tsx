@@ -3,6 +3,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { IAgreement } from '@/interface/interface-agreement';
 import { PaymentMethodEnum } from '@/interface/interface-payment-method';
 import { NumericFormat, PatternFormat } from 'react-number-format';
+import {StatusOrderStyles} from "@/styles/status-order-styles";
 
 const columnHelper = createColumnHelper<IAgreement>();
 // @ts-ignore
@@ -14,7 +15,7 @@ export const ColumnsAgreement = [
   }),
   columnHelper.accessor('contractNumber', {
     header: () => <h3 className={'table_header'}>Номер заявки</h3>,
-    cell: (info) => info.getValue(),
+    cell: (info) => <span style={StatusOrderStyles[info.row.original.status]}> {info.getValue()}</span>,
   }),
   columnHelper.accessor('carrier.name', {
     header: () => <h3 className={'table_header'}>Заказчик</h3>,

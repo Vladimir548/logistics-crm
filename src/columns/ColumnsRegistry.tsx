@@ -10,7 +10,7 @@ const columnHelper = createColumnHelper<IRegistry>();
 export const ColumnsRegistry = [
   columnHelper.accessor('createdAt', {
     header: () => (
-      <div className={'flex justify-between w-full items-center gap-x-2'}>
+      <div className={'flex justify-center w-full items-center gap-x-2'}>
         {' '}
         <h3 className={'table_header'}>Дата</h3>
         <Sorting field={'createdAt'} />
@@ -23,18 +23,18 @@ export const ColumnsRegistry = [
     ),
   }),
 
-  columnHelper.accessor('agreement.contractNumber', {
+  columnHelper.accessor('application.agreement.contractNumber', {
     header: () => (
-      <div className={'flex justify-between w-full items-center gap-x-2'}>
+      <div className={'flex justify-center w-full items-center gap-x-2'}>
         <h3 className={'table_header'}>Номер договора</h3>
-        <Sorting field={'agreement.contractNumber'} />
+        <Sorting field={'application.agreement.contractNumber'} />
       </div>
     ),
     cell: (info) => {
-      const value = info.row.original?.agreement?.contractNumber;
+      const value = info.row.original?.application?.agreement?.contractNumber;
      return ( <span
           className={'w-full h-full'}
-          style={StatusOrderStyles[info.row.original?.agreement?.status]}
+          style={StatusOrderStyles[info.row.original?.application?.agreement?.status]}
       >
         {value ? value : ''}
       </span>)
@@ -42,7 +42,7 @@ export const ColumnsRegistry = [
   }),
   columnHelper.accessor('application.applicationNumber', {
     header: () => (
-      <div className={'flex justify-between w-full items-center gap-x-2'}>
+      <div className={'flex w-full justify-center items-center gap-x-2'}>
         <h3 className={'table_header'}>Номер заявки</h3>
         <Sorting field={'application.applicationNumber'} />
       </div>
@@ -51,19 +51,17 @@ export const ColumnsRegistry = [
       const value = info.row.original?.application?.applicationNumber;
       return (
       <span
-        className={'w-full h-full'}
+        className={`w-full h-full ${StatusOrderStyles[info.row.original?.application?.status]}`}
         style={StatusOrderStyles[info.row.original?.application?.status]}
       >
-
         {value}
-
       </span>
     )
     }
   }),
   columnHelper.accessor('application.invoice.invoiceNumber', {
     header: () => (
-      <div className={'flex justify-between w-full items-center gap-x-2'}>
+      <div className={'flex justify-center w-full items-center gap-x-2'}>
         <h3 className={'table_header'}>Номер УПД</h3>
         <Sorting field={'application.invoice.invoiceNumber'} />
       </div>
@@ -79,7 +77,7 @@ export const ColumnsRegistry = [
   }),
   columnHelper.accessor('application.costumer.name', {
     header: () => (
-      <div className={'flex justify-between w-full items-center gap-x-2'}>
+      <div className={'flex justify-center w-full items-center gap-x-2'}>
         <h3 className={'table_header '}>Заказчик</h3>
         <Sorting field={'application.costumer.name'} />
       </div>
@@ -121,15 +119,15 @@ export const ColumnsRegistry = [
       }),
     ],
   }),
-  columnHelper.accessor('agreement.carrier.name', {
+  columnHelper.accessor('application.agreement.carrier.name', {
     header: () => (
-      <div className={'flex justify-between w-full items-center gap-x-2'}>
+      <div className={'flex justify-center w-full items-center gap-x-2'}>
         <h3 className={'table_header '}>Перевозчик</h3>
         <Sorting field={'agreement.carrier.name'} />
       </div>
     ),
     cell: (info) =>{
-      const value = info.row.original?.agreement?.carrier?.name;
+      const value = info.row.original?.application?.agreement?.carrier?.name;
       return (
           <span>
         {value}
@@ -144,10 +142,10 @@ export const ColumnsRegistry = [
     ),
 
     columns: [
-      columnHelper.accessor('agreement.carrierContactPerson.fullName', {
+      columnHelper.accessor('application.agreement.carrierContactPerson.fullName', {
         header: () => <h3 className={'table_header'}>Имя</h3>,
         cell: (info) => {
-          const value = info.row.original?.agreement?.carrierContactPerson?.fullName;
+          const value = info.row.original?.application?.agreement?.carrierContactPerson?.fullName;
           return (
               <span>
         {value}
@@ -156,10 +154,10 @@ export const ColumnsRegistry = [
         },
 
       }),
-      columnHelper.accessor('agreement.carrierContactPerson.numberPhone', {
+      columnHelper.accessor('application.agreement.carrierContactPerson.numberPhone', {
         header: () => <h3 className={'table_header'}>Телефон</h3>,
         cell: (info) => {
-          const value = info.row.original?.agreement?.carrierContactPerson?.numberPhone;
+          const value = info.row.original?.application?.agreement?.carrierContactPerson?.numberPhone;
           return (
               <PatternFormat displayType="text" value={value} format="+7 (###) ###-##-##" />
           )
@@ -172,10 +170,10 @@ export const ColumnsRegistry = [
     header: () => <h3 className={'table_header_two'}>Водитель</h3>,
 
     columns: [
-      columnHelper.accessor('agreement.driver.fullName', {
+      columnHelper.accessor('application.agreement.driver.fullName', {
         header: () => <h3 className={'table_header'}>ФИО</h3>,
         cell: (info) => {
-          const value = info.row.original?.agreement?.driver?.fullName;
+          const value = info.row.original?.application?.agreement?.driver?.fullName;
           return (
               <span>
         {value}
@@ -183,11 +181,11 @@ export const ColumnsRegistry = [
           )
         },
       }),
-      columnHelper.accessor('agreement.driver.numberPhone', {
+      columnHelper.accessor('application.agreement.driver.numberPhone', {
         header: () => <h3 className={'table_header'}>Телефон водителя</h3>,
         cell: (info) =>
       {
-        const value = info.row.original?.agreement?.driver?.numberPhone;
+        const value = info.row.original?.application?.agreement?.driver?.numberPhone;
         return (
       <span>
        <PatternFormat displayType="text" value={value} format="+7 (###) ###-##-##" />
@@ -197,10 +195,10 @@ export const ColumnsRegistry = [
       }),
     ],
   }),
-  columnHelper.accessor('agreement.route', {
+  columnHelper.accessor('application.agreement.route', {
     header: () => <h3 className={'table_header'}>Маршрут</h3>,
     cell: (info) => {
-      const value = info.row.original?.agreement?.route;
+      const value = info.row.original?.application?.agreement?.route;
       return (
           <span>
         {value}
@@ -232,10 +230,10 @@ export const ColumnsRegistry = [
     },
 
   }),
-  columnHelper.accessor('agreement.dateOfDownload', {
+  columnHelper.accessor('application.agreement.dateOfDownload', {
     header: () => <h3 className={'table_header'}>Дата загрузки</h3>,
     cell: (info) => {
-      const value = info.row.original?.agreement?.dateOfDownload;
+      const value = info.row.original?.application?.agreement?.dateOfDownload;
       return (
           <span>
        {value ? new Date(value).toISOString().split('T')[0] : null}
@@ -244,10 +242,10 @@ export const ColumnsRegistry = [
     },
 
   }),
-  columnHelper.accessor('agreement.unloadingDate', {
+  columnHelper.accessor('application.agreement.unloadingDate', {
     header: () => <h3 className={'table_header'}>Дата выгрузки</h3>,
     cell: (info) => {
-      const value = info.row.original?.agreement?.unloadingDate;
+      const value = info.row.original?.application?.agreement?.unloadingDate;
       return (
           <span>
        {value ? new Date(value).toISOString().split('T')[0] : null}
@@ -264,10 +262,10 @@ export const ColumnsRegistry = [
 
     },
   }),
-  columnHelper.accessor('agreement.methodOfPaymentToTheCarrier', {
+  columnHelper.accessor('application.agreement.methodOfPaymentToTheCarrier', {
     header: () => <h3 className={'table_header'}>Метод оплаты перевозчику</h3>,
     cell: (info) => {
-      const value = info.row.original?.agreement?.methodOfPaymentToTheCarrier;
+      const value = info.row.original?.application?.agreement?.methodOfPaymentToTheCarrier;
         return PaymentMethodEnum[value as unknown as keyof typeof PaymentMethodEnum];
     },
   }),
@@ -296,10 +294,10 @@ export const ColumnsRegistry = [
       )
     },
   }),
-  columnHelper.accessor('agreement.amountOfPaymentToTheCarrier', {
+  columnHelper.accessor('application.agreement.amountOfPaymentToTheCarrier', {
     header: () => <h3 className={'table_header'}>Сумма оплаты перевозчику</h3>,
     cell: (info) => {
-      const value = info.row.original?.agreement?.amountOfPaymentToTheCarrier;
+      const value = info.row.original?.application?.agreement?.amountOfPaymentToTheCarrier;
       return (
           <NumericFormat
               displayType="text"
@@ -338,10 +336,10 @@ export const ColumnsRegistry = [
       )
     },
   }),
-  columnHelper.accessor('agreement.advancePaymentToTheCarrier', {
+  columnHelper.accessor('application.agreement.advancePaymentToTheCarrier', {
     header: () => <h3 className={'table_header'}>Предоплата перевозчику</h3>,
     cell: (info) => {
-      const value = info.row.original?.agreement?.advancePaymentToTheCarrier;
+      const value = info.row.original?.application?.agreement?.advancePaymentToTheCarrier;
       return (
           <NumericFormat
               displayType="text"
@@ -363,10 +361,10 @@ export const ColumnsRegistry = [
       )
     },
   }),
-  columnHelper.accessor('agreement.paymentDeadlineToTheCarrier', {
+  columnHelper.accessor('application.agreement.paymentDeadlineToTheCarrier', {
     header: () => <h3 className={'table_header'}>Срок оплаты перевозчику</h3>,
     cell: (info) => {
-      const value = info.row.original?.agreement?.paymentDeadlineToTheCarrier;
+      const value = info.row.original?.application?.agreement?.paymentDeadlineToTheCarrier;
       return (
           <span>
         {value}
@@ -396,10 +394,10 @@ export const ColumnsRegistry = [
       )
     },
   }),
-  columnHelper.accessor('agreement.dateOfPaymentToTheCarrier', {
+  columnHelper.accessor('application.agreement.dateOfPaymentToTheCarrier', {
     header: () => <h3 className={'table_header'}>Дата оплаты перевозчику</h3>,
     cell: (info) =>  {
-      const value = info.row.original?.agreement?.dateOfPaymentToTheCarrier;
+      const value = info.row.original?.application?.agreement?.dateOfPaymentToTheCarrier;
       return (
           <span>
        {value ? new Date(value).toISOString().split('T')[0] : null}

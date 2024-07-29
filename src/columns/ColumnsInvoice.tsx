@@ -25,7 +25,7 @@ export const ColumnsInvoice = [
   }),
   columnHelper.accessor('dateOfPaymentToUs', {
     header: () => <h3 className={'table_header'}>Дата оплаты нам</h3>,
-    cell: (info) => <span>{info?.getValue().split('T')[0]}</span>,
+    cell: (info) => <span>{info?.getValue()?.split('T')[0]}</span>,
   }),
   columnHelper.accessor('accountNumber.account', {
     header: () => <h3 className={'table_header'}>Номер счета</h3>,

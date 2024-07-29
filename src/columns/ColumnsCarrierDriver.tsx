@@ -30,7 +30,7 @@ export const ColumnsCarrierDriver = [
       }),
       columnHelper.accessor('passportIssueDate', {
         header: () => <h3 className={'table_header'}>Дата выдачи</h3>,
-        cell: (info) => info?.getValue().split('T')[0],
+        cell: (info) => info?.getValue()?.split('T')[0],
       }),
       columnHelper.accessor('whoIssuedThePassports', {
         header: () => <h3 className={'table_header'}>Выдан</h3>,
@@ -56,7 +56,7 @@ export const ColumnsCarrierDriver = [
       }),
       columnHelper.accessor('dateOfIssueOfDriversLicense', {
         header: () => <h3 className={'table_header'}>Дата выдачи</h3>,
-        cell: (info) => info?.getValue().split('T')[0],
+        cell: (info) => info?.getValue()?.split('T')[0],
       }),
     ],
   }),
