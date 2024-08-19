@@ -19,7 +19,7 @@ export default function FormLayouts({children,label,handleFn,buttonVariant}:IFor
     };
     return (
         <form   onSubmit={onSubmit}  className={' h-full border-text-dark border p-2  rounded-md'}>
-            <div className={'flex justify-end w-full items-center border-b border-text mb-2'}>
+            <div className={'flex justify-end w-full items-center border-b border-text mb-2 pb-1'}>
                 <Button variant={buttonVariant} type={'submit'}>
                     {label}
                 </Button>

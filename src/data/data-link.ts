@@ -71,35 +71,5 @@ export const DATALINK: ILink[] = [
     link: '/invoice',
     label: 'УПД',
   },
-  {
-    id: 7,
-    label: 'Отчеты',
-    subLink: [
-      {
-        id: 1,
-        link: '/act/us',
-        label: 'Акт сверки (Нам)',
-      },
-      {
-        id: 2,
-        link: '/act/carrier',
-        label: 'Акт сверки (Перевозчик)',
-      },
-      {
-        id: 3,
-        link: 'act/stats',
-        label: 'Статистика логистов',
-      },
-      {
-        id: 4,
-        link: '/act/paid',
-        label: 'Оплаченные заявки',
-      },
-    ],
-  },
-  {
-    id: 8,
-    link: '/profile',
-    label: 'Профиль',
-  },
+
 ];

@@ -15,7 +15,7 @@ export default function HomeLayout({ children,scroll=true }: { children: React.R
                 {scroll ? (
                 <ScrollArea className={' w-full h-full  '} >
                     <Suspense fallback={null}>
-                    {children}
+                     {children}
                     </Suspense>
                     <ScrollBar  orientation="horizontal" />
                 </ScrollArea>

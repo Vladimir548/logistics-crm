@@ -3,10 +3,10 @@ import HomeLayout from "@/app/layouts/HomeLayout";
 
 export default function Page() {
     return (
-        <div>
+
             <HomeLayout scroll={false}>
-            <Application/>
+                <Application/>
             </HomeLayout>
-        </div>
+
     );
 };

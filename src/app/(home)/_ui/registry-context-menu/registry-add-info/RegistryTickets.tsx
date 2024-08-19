@@ -61,9 +61,9 @@ export default function RegistryTickets() {
             </Button>
           </ContextMenuItem>
         </DialogTrigger>
-        <DialogContent className={'bg-black/80 backdrop-blur-2xl w-[300px]  '}>
+        <DialogContent className={'bg-black/80 backdrop-blur-2xl w-[300px] flex flex-col  '}>
           <DialogHeader>
-            <DialogTitle>Добавление квитков</DialogTitle>
+            <DialogTitle className={'text-text'}>Добавление квитков</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleSubmit(onSubmit)} className={'flex flex-col gap-y-2 '}>
             <div className={'flex flex-col'}>

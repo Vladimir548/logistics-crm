@@ -29,7 +29,7 @@ export const QueryApplication = {
     });
     return data as IApplication;
   },
-  async update(dto: IApplication, number: string) {
+  async update(dto: IApplication, number: number) {
     const { data } = await instance.post<IApplication>(`/application/update/${number}`, dto);
     return data as IApplication;
   },

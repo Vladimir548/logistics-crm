@@ -1,6 +1,7 @@
 import { instance } from '@/app/api/axios';
 import { IRegistry, IRegistryResponse, StatusOrder } from '@/interface/interface-registry';
 import { IAddTickets } from '@/app/(home)/_ui/registry-context-menu/registry-add-info/RegistryTickets';
+import {IFilterResponse} from "@/interface/interface-filter";
 interface IQueryAllParams {
   query?: string | null;
   field?: string;
@@ -9,33 +10,13 @@ interface IQueryAllParams {
   page?: number | string | null;
 }
 export const QueryRegistry = {
-  async getAllRegistry(
-    query: string | null,
-    order?: string,
-    field?: string,
-    take?: number,
-    page?: number | string | null ,
-  ) {
-    const paramsValue: IQueryAllParams = {
-      query: query !== '' ? query : null,
-      take: Number(take),
-      page: Number(page) !== null ? page : undefined,
-      field: field !== null ? field : undefined,
-      order: order !== null ? order : undefined,
-    };
-
-    const { data } = await instance.get<IRegistryResponse>(`/registry/registries`, {
-      params: paramsValue,
-    });
-
-    return data as IRegistryResponse;
-  },
-  async getAll({take,pageParam,query,order,field}: {
+  async getAll({take,pageParam,query,order,field,filter}: {
     take?: number,
     pageParam?: number,
     query?: string,
     order?:string,
     field?:string
+    filter?:Partial<IFilterResponse>
   }) {
     const { data } = await instance.get<IRegistryResponse>(`/registry/all`, {
       params:{
@@ -43,7 +24,10 @@ export const QueryRegistry = {
         offset:pageParam,
         query,
         order,
-        field
+        field,
+        ...(filter && {
+        filter:filter
+        })
       }
     });
     return data as IRegistryResponse;

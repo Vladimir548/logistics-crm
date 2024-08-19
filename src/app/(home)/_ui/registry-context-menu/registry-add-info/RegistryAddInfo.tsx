@@ -5,13 +5,8 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
 } from '@/components/context-menu/ContextMenu';
-
-const RegistryComment = lazy(
-  () => import('@/app/(home)/_ui/registry-context-menu/registry-add-info/RegistryComment'),
-);
-const RegistryTickets = lazy(
-  () => import('@/app/(home)/_ui/registry-context-menu/registry-add-info/RegistryTickets'),
-);
+import RegistryComment from "@/app/(home)/_ui/registry-context-menu/registry-add-info/RegistryComment";
+import RegistryTickets from "@/app/(home)/_ui/registry-context-menu/registry-add-info/RegistryTickets";
 import { IoIosArrowForward } from 'react-icons/io';
 import { lazy } from 'react';
 import {Button} from "@/components/buttons/Buttons";
@@ -19,8 +14,8 @@ import {Button} from "@/components/buttons/Buttons";
 export default function RegistryAddInfo() {
   return (
     <ContextMenuSub>
-        <Button   className={'w-full '} variant={'add'}>
-      <ContextMenuSubTrigger >
+        <Button   className={'w-full flex items-center '} variant={'add'}>
+      <ContextMenuSubTrigger className={'w-full flex items-center '}  >
        <p>Добавление информации</p>
         <span>
           <IoIosArrowForward />

@@ -6,7 +6,7 @@ import cn from "classnames";
 
 
  const buttonVariants = cva(
-    "inline-flex items-center justify-center my-1 whitespace-nowrap gap-x-2  rounded-md text-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+    "inline-flex items-center justify-center  whitespace-nowrap gap-x-2  rounded-md text-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
     {
         variants: {
             variant: {
@@ -18,14 +18,17 @@ import cn from "classnames";
                     "bg-transparent text-yellow-600 border border-yellow-600 shadow-sm hover:bg-yellow-600/30",
                 delete:
                     "bg-transparent border border-red-600 text-red-600 shadow-sm hover:bg-red-600/30",
-                ghost: "hover:bg-accent hover:text-accent-foreground",
+                ghost: "hover:bg-accent hover:bg-text/10",
                 link: "text-primary underline-offset-4 hover:underline",
+                'no-style':'',
+                icon:''
+
             },
             size: {
                 default: "h-9 px-4 py-2",
                 sm: "h-8 rounded-md px-3 text-xs",
                 lg: "h-10 rounded-md px-8",
-                icon: "h-9 w-9",
+                icon: "h-[35px] w-[35px] ",
                 'no-style':''
             },
         },

@@ -18,8 +18,6 @@ export default function SelectRegistry({ control }: ISelectRegistry) {
     queryFn: () => QueryApplication.getAll({}),
   });
   return (
-
-
         <Controller
           control={control}
           render={({ field: { onChange, value } }) => (
@@ -29,10 +27,10 @@ export default function SelectRegistry({ control }: ISelectRegistry) {
                   value={String(value)}
                   defaultValue={String(value)}
               >
-                  { data?.data?.filter(item => item.agreement === null).map(value => (
+                  { data?.data?.map(value => (
                       <SelectItem  key={value.id} value={String(value.id)}>
-                                 {`Заявка № ${value.applicationNumber}`}
-                             </SelectItem>
+                          {`Заявка № ${value.applicationNumber}`}
+                      </SelectItem>
                   ))}
               </SelectCustom>
           )}

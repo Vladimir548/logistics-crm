@@ -28,7 +28,7 @@ export default function InvoiceSelectApplication({ control }: ISelectApplication
                 value={String(value)}
                 defaultValue={!isPending ? String(value) : 'Загрузка...'}
             >
-                {data?.data?.filter(item => item.invoice === null ).map((value) => (
+                {data?.data.map((value) => (
                     <SelectItem key={value.id} value={String(value.id)}>
                         {`Заявка № ${value.applicationNumber}`}
                     </SelectItem>))}

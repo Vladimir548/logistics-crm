@@ -50,14 +50,14 @@ export default function RegistryComment() {
             <Button variant={"add"}
 
             >
-              <p> Добавить комментарий</p>
+              <p > Добавить комментарий</p>
             </Button>
           </ContextMenuItem>
         </DialogTrigger>
 
-        <DialogContent className={'bg-black/80 backdrop-blur-2xl  '}>
+        <DialogContent className={'bg-black/80 backdrop-blur-2xl flex flex-col  '}>
           <DialogHeader>
-            <DialogTitle>Добавление комментария</DialogTitle>
+            <DialogTitle className={'text-text'}>Добавление комментария</DialogTitle>
           </DialogHeader>
           <textarea
             value={comment}

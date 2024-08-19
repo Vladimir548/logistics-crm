@@ -33,6 +33,7 @@ export default function InvoiceSelectAccountNumber({ control }: ISelectAccountNu
           control={control}
           render={({ field: { onChange, value } }) => (
               <SelectCustom
+                  className={'w-[230px]'}
                   label={'Номер счета'}
                   onValueChange={onChange}
                   value={String(value)}

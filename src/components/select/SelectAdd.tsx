@@ -20,7 +20,7 @@ export default function SelectAdd({element}:{element:ReactElement}) {
                         </TooltipTrigger>
                 <DialogPortal>
                         <DialogContent className={' w-[80%] h-[80%] backdrop-blur-2xl  '}>
-                            <div >
+                            <div className={'w-full'} >
                                 {element}
                             </div>
                         </DialogContent>

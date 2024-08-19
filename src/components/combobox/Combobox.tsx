@@ -56,7 +56,7 @@ export default function Combobox({controllerValue, disabled, onValueChange, quer
 
     const findCurrentItem = useMemo(()=> {
        return  items.find(item => item.id === Number(value))?.name
-    }, [value]);
+    }, [value,controllerValue]);
 
     return (
         <Popover open={open} onOpenChange={setOpen}>

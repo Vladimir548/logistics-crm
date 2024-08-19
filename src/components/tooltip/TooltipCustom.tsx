@@ -4,22 +4,23 @@ import React from "react";
 
 interface ITooltipProps {
     children: React.ReactNode;
-    label:string
+    label:string,
+    duration?:number
+    skipDuration?:number
 }
 
-export default function TooltipCustom({children,label}:ITooltipProps) {
+export default function TooltipCustom({children,label,duration,skipDuration}:ITooltipProps) {
     return (
-        <Tooltip.Provider  >
+        <Tooltip.Provider  delayDuration={duration ? duration : 500} skipDelayDuration={skipDuration ? skipDuration : 200}  >
             <Tooltip.Root  >
-                <Tooltip.Trigger asChild >
+                <Tooltip.Trigger asChild  >
                     {children}
                 </Tooltip.Trigger>
-<Tooltip.Portal>
-                <Tooltip.Content sideOffset={2} className={'h-full z-10 break-all  w-full bg-secondary-cust text-text backdrop-blur-lg max-w-[400px] rounded-lg border border-text  p-2 '}
-                                  avoidCollisions={true} >
+            <Tooltip.Portal>
+                <Tooltip.Content  sideOffset={2} className={'h-full z-10 break-all  w-full bg-secondary-cust text-text backdrop-blur-lg max-w-[400px] rounded-lg border border-text  p-2 '}>
                     {label}
                 </Tooltip.Content>
-</Tooltip.Portal>
+            </Tooltip.Portal>
             </Tooltip.Root>
         </Tooltip.Provider>
     );

@@ -2,7 +2,7 @@
 
 import { useEffect, useState} from 'react';
 
-import {usePathname, useRouter} from 'next/navigation';
+import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import useDebounce from '@/hooks/useDebounce';
 import InputCustom from "@/components/input/InputCustom";
 import {RiSearch2Fill} from "react-icons/ri";
@@ -14,8 +14,13 @@ export default function Search() {
   const search = useSearch()
   const { push } = useRouter();
   const pathname = usePathname()
+    const searchParams = useSearchParams()
   const sendValue = () => {
-    push(`?search=${debounced}`);
+      const params = new URLSearchParams(searchParams.toString());
+      if (debounced){
+          params.set('search',debounced)
+      }
+      push(`${pathname}?${decodeURIComponent(params.toString())}`);
   };
         const handleChange =(value:string)=>{
             setValue(value)
@@ -27,8 +32,10 @@ export default function Search() {
 
         useEffect(()=>{
             const timeout = setTimeout(()=>{
-                if (value.length === 0){
-                    push(pathname)
+                if (value.length === 0 && searchParams.get('search')){
+                    const params = new URLSearchParams(searchParams.toString());
+                    params.delete('search');
+                    push(`${pathname}?${decodeURIComponent(params.toString())}`);
                 }
             },500)
             return ()=> clearTimeout(timeout)
