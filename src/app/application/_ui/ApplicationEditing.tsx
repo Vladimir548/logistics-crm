@@ -2,34 +2,26 @@
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 
 import {useMutation} from '@tanstack/react-query';
-import { useContextMenu } from '@/zustand/useContextMenu';
+
 import { IApplication } from '@/interface/interface-application';
 import toast from 'react-hot-toast';
 import { errorCatch } from '@/app/api/api.helper';
-
-
 import InputCustom from "@/components/input/InputCustom";
 import {QueryApplication} from "@/app/api/query/query-application";
 import SelectCostumer from "@/app/(home)/create/registry-select/select/costumer/SelectCostumer";
 import SelectPaymentMethod from "@/app/(home)/create/registry-select/select/payment-method/SelectPaymentMethod";
-import {useEffect} from "react";
-
 import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
 import FormLayouts from "@/app/layouts/FormLayouts";
-
-
+import {useParams} from "next/navigation";
 export default function ApplicationEditing() {
-  const { id } = useContextMenu();
-  useEffect(()=>{
-
-  },[id])
+    const {id} = useParams<{id:string}>()
     const send = useReactQuerySubscription({query:'update-application', tracking:'application'})
   const {  handleSubmit, control }  =  useForm<IApplication>({
-    defaultValues: async () => QueryApplication.getNumber(id),
+    defaultValues: async () => QueryApplication.getNumber(Number(id)),
   });
   const { mutate } = useMutation({
     mutationKey: ['update-application'],
-    mutationFn: (data: IApplication) => QueryApplication.update(data, String(id)),
+    mutationFn: (data: IApplication) => QueryApplication.update(data, Number(id)),
     onSuccess: () => {
       toast.success('Запись обновлена');
         send({operation:'invalidate',entity:['get-all-application','get-all-registry']})

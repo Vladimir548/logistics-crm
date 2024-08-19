@@ -1,7 +1,6 @@
 'use client'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { NumericFormat } from 'react-number-format';
-import { useContextMenu } from '@/zustand/useContextMenu';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { errorCatch } from '@/app/api/api.helper';
@@ -15,22 +14,25 @@ import InvoiceSelectAccountNumber from "@/app/invoice/_ui/select/InvoiceSelectAc
 import SelectPaymentMethod from "@/app/(home)/create/registry-select/select/payment-method/SelectPaymentMethod";
 import FormLayouts from "@/app/layouts/FormLayouts";
 import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
+import {useEffect} from "react";
+import {useParams} from "next/navigation";
 export default function InvoiceEditing() {
-  const { id } = useContextMenu();
+  const {id} = useParams<{id:string}>()
   const { data } = useQuery({
     queryKey: ['get-number-invoice'],
-    queryFn: () => QueryInvoice.getNumber(id),
+    queryFn: () => QueryInvoice.getNumber(Number(id)),
   });
-  const { handleSubmit, control } = useForm<IInvoice>({
-    defaultValues: {
-      ...data,
-      dateOfPaymentToUs: data?.dateOfPaymentToUs?.split('T')[0],
-    },
-  });
+  const { handleSubmit, control,reset } = useForm<IInvoice>();
+    useEffect(() => {
+        reset({
+            ...data,
+            dateOfPaymentToUs: data?.dateOfPaymentToUs?.split('T')[0],
+        })
+    }, [data]);
     const send = useReactQuerySubscription({query:'update-invoice', tracking:'invoice'})
   const { mutate } = useMutation({
     mutationKey: ['update-invoice'],
-    mutationFn: (data: IInvoice) => QueryInvoice.update(data, id),
+    mutationFn: (data: IInvoice) => QueryInvoice.update(data, Number(id)),
     onSuccess: async () => {
       toast.success('Запись обнавлена');
         send({operation:'invalidate',entity:['get-all-application','get-all-registry','get-all-invoice','get-number-invoice']})

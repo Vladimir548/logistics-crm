@@ -1,7 +1,7 @@
 'use client'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { NumericFormat } from 'react-number-format';
-import { useContextMenu } from '@/zustand/useContextMenu';
+
 import { IAgreement } from '@/interface/interface-agreement';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
@@ -16,26 +16,26 @@ import SelectPaymentMethod
 import SelectRegistry from "@/app/agreement/_ui/select/SelectRegistry";
 import FormLayouts from "@/app/layouts/FormLayouts";
 import {useReactQuerySubscription} from "@/hooks/useReactQuerySubscription";
-
+import {useEffect} from "react";
+import {useParams} from "next/navigation";
 export default function AgreementEditing() {
-  const { id } = useContextMenu();
+    const {id} = useParams<{id:string}>()
+    const send = useReactQuerySubscription({query:'update-agreement', tracking:'agreement'})
 
   const { data } = useQuery({
     queryKey: ['get-agreement-contract',id],
     queryFn: () => QueryAgreement.getContract(Number(id)),
   });
-  const {  handleSubmit, control,  } = useForm<IAgreement>({
-    defaultValues: {
-      ...data,
-      dateOfPaymentToTheCarrier: data?.dateOfPaymentToTheCarrier?.split('T')[0],
-      dateOfDownload: data?.dateOfDownload?.split('T')[0],
-      unloadingDate: data?.unloadingDate?.split('T')[0],
-    },
-  });
-    const send = useReactQuerySubscription({query:'update-agreement', tracking:'agreement'})
+  const {  handleSubmit, control,reset  } = useForm<IAgreement>();
+    useEffect(() => {
+        reset({...data,  dateOfPaymentToTheCarrier: data?.dateOfPaymentToTheCarrier?.split('T')[0],
+            dateOfDownload: data?.dateOfDownload?.split('T')[0],
+            unloadingDate: data?.unloadingDate?.split('T')[0],
+        applicationId:data?.applicationId})
+    }, [data]);
   const { mutate } = useMutation({
     mutationKey: ['update-agreement'],
-    mutationFn: (data: IAgreement) => QueryAgreement.update(data, id),
+    mutationFn: (data: IAgreement) => QueryAgreement.update(data, Number(id)),
     onSuccess: async () => {
       toast.success('Запись обнавлена');
         send({
@@ -51,6 +51,7 @@ export default function AgreementEditing() {
   const onSubmit: SubmitHandler<IAgreement> = (data) => {
     mutate(data);
   };
+
   return (
       <FormLayouts buttonVariant={'editing'} handleFn={handleSubmit(onSubmit)} label={'Сохранить'}>
           <div className="flex flex-col gap-y-2">
@@ -97,8 +98,9 @@ export default function AgreementEditing() {
                 control={control}
                 render={({field: {onChange, value}}) => (
                     <NumericFormat
+
                         customInput={InputCustom}
-                        label={'Сумма оплаты перевозчику'}
+                        label={'Сумма оплаты'}
                         suffix=" ₽"
                         allowNegative
                         value={value}
