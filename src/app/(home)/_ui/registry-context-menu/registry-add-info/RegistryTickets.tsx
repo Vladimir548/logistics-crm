@@ -31,7 +31,7 @@ export default function RegistryTickets() {
   });
 
   const queryClient = useQueryClient();
-  const { register, handleSubmit, control, reset } = useForm<IAddTickets>({
+  const { handleSubmit, control } = useForm<IAddTickets>({
     defaultValues: {
       id: id,
     },
@@ -110,14 +110,11 @@ export default function RegistryTickets() {
               />
             </div>
             <div className={'flex justify-end items-center gap-x-2'}>
-              <button
-                type={'submit'}
-                className={
-                  'py-2 px-3 rounded-md border border-green-600 duration-300 ease-linear hover:bg-green-600/30'
-                }
+              <Button variant={'add'}
+
               >
                 Добавить
-              </button>
+              </Button>
             </div>
           </form>
         </DialogContent>

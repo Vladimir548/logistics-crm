@@ -18,7 +18,6 @@ export default function UserApplication({id}: {id: number}) {
     return (
         <div>
            <Table queryKey={['get-all-application']} queryFn={(pageParam)=>QueryApplication.user({id:id,pageParam:pageParam})}  columns={ColumnsApplication} contextItem={contextItem} getDataForContext={getDataForContext} />
-
         </div>
     );
 };

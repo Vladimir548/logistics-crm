@@ -64,7 +64,7 @@ export default function RegistryComment() {
             onInput={(event: any) => setComment(event.target.value)}
             placeholder={'Введите комментарий'}
             className={
-              'w-full h-[200px] bg-[#051a21] border-2 border-[#0a2e39]  outline-none rounded-md  p-1 max-h-[400px] min-h-[100px] focus:bg-[#0a2e39] '
+              'w-[500px] h-[200px] bg-[#051a21] border-2 border-[#0a2e39]  outline-none rounded-md  p-1 max-h-[400px] min-h-[100px] focus:bg-[#0a2e39] '
             }
           />
 

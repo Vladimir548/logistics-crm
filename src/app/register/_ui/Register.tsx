@@ -19,11 +19,11 @@ import {Button} from "@/components/buttons/Buttons";
 
 export default function Register() {
   const {
-    register,
+
     handleSubmit,
     reset,
       control,
-    formState: { errors },
+
   } = useForm<IFormData>();
   const { replace } = useRouter();
   const { mutate } = useMutation({
@@ -43,8 +43,8 @@ export default function Register() {
     mutate(data);
   };
   return (
-    <div className={'w-full min-h-screen flex justify-center items-center   '}>
-      <div className=" border border-text p-2 rounded-md w-[320px] h-full">
+    <div className={'w-full bg-secondary-cust min-h-screen flex justify-center items-center   '}>
+      <div className=" border border-text p-2 rounded-md  h-full">
         <h2 className={'text-2xl flex justify-center text-text  pb-4'}>Регистрация</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-y-4 ">
@@ -82,7 +82,7 @@ export default function Register() {
                   render={({ field: { onChange, value } }) => (
                       <SelectCustom
                           label={'Роль'}
-                          className={'w-full'}
+                          className={'w-[350px]'}
                           onValueChange={onChange}
                           value={value}
                       >

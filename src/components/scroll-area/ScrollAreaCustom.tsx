@@ -10,7 +10,7 @@ interface ScrollAreaCustomProps extends HTMLAttributes<HTMLDivElement> {
 
     return (
         <ScrollArea.Root >
-            <ScrollArea.Viewport  className={'relative'}  style={{ ...style, overflowX: 'auto', overflowY: 'auto' }} {...props} ref={ref} >
+            <ScrollArea.Viewport  className={'relative '}  style={{ ...style, overflowX: 'auto', overflowY: 'auto' }} {...props} ref={ref} >
                 {children}
             </ScrollArea.Viewport>
             <ScrollArea.Scrollbar

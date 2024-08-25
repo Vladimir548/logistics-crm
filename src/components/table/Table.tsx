@@ -88,7 +88,7 @@ export default function Table<T>({ columns, contextItem, getDataForContext, quer
                               height: 'calc(100vh - 62px)',
                           }}>
 
-            <table style={{display: 'grid'}}>
+            <table style={{display: 'grid',height:'100%'}}>
                 <thead className={' border-b border-b-border bg-table-body/50 backdrop-blur-xl text-text  w-full'}
                        style={{
                            display: 'grid',
