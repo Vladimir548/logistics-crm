@@ -6,7 +6,7 @@ import cn from "classnames";
 
 
  const buttonVariants = cva(
-    "inline-flex items-center justify-center  whitespace-nowrap gap-x-2  rounded-md text-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+    "inline-flex items-center justify-center  whitespace-nowrap gap-x-2  text-md font-medium transition-colors focus-visible:outline-none  disabled:pointer-events-none disabled:opacity-50",
     {
         variants: {
             variant: {
@@ -22,6 +22,12 @@ import cn from "classnames";
                 link: "text-primary underline-offset-4 hover:underline",
                 'no-style':'',
                 icon:''
+            },
+            radius:{
+                sm:'rounded-sm',
+                md:'rounded-md',
+                lg:'rounded-lg',
+                xl:'rounded-xl',
 
             },
             size: {
@@ -29,12 +35,15 @@ import cn from "classnames";
                 sm: "h-8 rounded-md px-3 text-xs",
                 lg: "h-10 rounded-md px-8",
                 icon: "h-[35px] w-[35px] ",
+                full:'w-full h-full py-1',
                 'no-style':''
             },
+
         },
         defaultVariants: {
             variant: "default",
             size: "default",
+            radius:'md'
         },
     }
 )
@@ -46,11 +55,11 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className,  variant, size, asChild = false, ...props }, ref) => {
+    ({ className,  variant, size, radius, asChild = false, ...props }, ref) => {
         const Comp = asChild ? Slot : "button"
         return (
             <Comp
-                className={cn(buttonVariants({ variant, size, className }))}
+                className={cn(buttonVariants({ variant, size, radius, className }))}
                 ref={ref}
                 {...props}
             />

@@ -1,11 +1,10 @@
 'use client'
 import Link from 'next/link';
 import {DATALINK} from '@/data/data-link';
-import {useEffect, useMemo, useState} from 'react';
+import { useState} from 'react';
 import {IoIosArrowDown} from 'react-icons/io';
-import style from './style.module.scss'
 import {ScrollArea} from "@/components/scroll-area/ScrollArea";
-import {useParams, usePathname} from "next/navigation";
+import { usePathname} from "next/navigation";
 import SidebarProfile from "@/components/sidebar/SidebarProfile";
 
 export default function SidebarNav() {
@@ -76,8 +75,8 @@ export default function SidebarNav() {
                     </li>
                 ))}
             </ul>
-            <div className={'absolute left-0 bottom-0'}>
-            <SidebarProfile/>
+            <div className={'absolute w-full left-0 bottom-0'}>
+                <SidebarProfile/>
             </div>
         </ScrollArea>
     );
