@@ -4,7 +4,8 @@ import "./globals.scss";
 import {ProviderNextUI} from "@/providers/ProviderNextUI";
 import ProviderQuery from "@/providers/ProviderQuery";
 import {Toaster} from "react-hot-toast";
-import {Suspense} from "react";
+import ProviderSocketStatus from "@/providers/ProviderSocketStatus";
+
 
 const roboto = Roboto({
     subsets: ['latin'],
@@ -28,11 +29,11 @@ export default function RootLayout({
         <ProviderNextUI>
             <ProviderQuery>
                 <Toaster position={'bottom-right'}/>
-                <main className={'h-full'}>
-                    <Suspense fallback={null}>
-                    {children}
-                    </Suspense>
-                </main>
+                <ProviderSocketStatus>
+                    <main className={'h-full'}>
+                        {children}
+                    </main>
+                </ProviderSocketStatus>
             </ProviderQuery>
         </ProviderNextUI>
         </body>
