@@ -23,7 +23,7 @@ export default function ProfileExit() {
     })
     return (
         <div>
-            <Button onClick={()=>mutate()} variant={'delete'} size={"no-style"} className={'p-2'} ><IoMdExit size={21} /> Выход</Button>
+            <Button onClick={()=>mutate()} variant={'delete'} size={"no-style"} className={'px-3 py-2'} radius={"sm"} ><IoMdExit size={18} /> Выход</Button>
         </div>
     );
 };

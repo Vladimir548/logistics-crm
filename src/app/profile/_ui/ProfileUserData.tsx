@@ -40,7 +40,7 @@ export default function ProfileUserData({id}:{id:number}) {
                     <Tab className={'text-text bg-transparent '} key={tab.value} title={tab.label}>
                         <Card className={'bg-transparent w-full h-full  relative shadow shadow-cyan-600'}>
                                 <ScrollArea className={' w-full h-full  '}>
-                            <CardBody className={'bg-transparent p-0 w-full h-full'}>
+                            <CardBody className={'bg-transparent p-0 w-full h-full] '}>
                                     {tab.component}
                             </CardBody>
                                     <ScrollBar  orientation={'horizontal'}/>
