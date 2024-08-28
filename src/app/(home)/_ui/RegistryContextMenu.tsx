@@ -7,6 +7,7 @@ import {IRegistry} from "@/interface/interface-registry";
 import ChangeStatusApplication from "@/app/application/_ui/context-menu/ChangeStatusApplication";
 import RegistryAddInfo from "@/app/(home)/_ui/registry-context-menu/registry-add-info/RegistryAddInfo";
 import RegistryDelete from "@/app/(home)/_ui/registry-context-menu/RegistryDelete";
+import UploadFiles from "@/components/upload-files/UploadFiles";
 
 export default function RegistryContextMenu() {
     const { getId, getStatusAgreement, getStatusApplication, getNumberApplication, getContractAgreement, getNumberInvoice,id } = useContextMenu();
@@ -18,6 +19,8 @@ export default function RegistryContextMenu() {
             component: <ChangeStatusAgreement />,
         },
         {
+            component: <UploadFiles id={id}  />,
+        }, {
             component: <RegistryAddInfo />,
         },
         {
