@@ -1,14 +1,9 @@
-import { instance } from '@/app/api/axios';
-import { IRegistry, IRegistryResponse, StatusOrder } from '@/interface/interface-registry';
+import {axiosData, instance} from '@/app/api/axios';
+import { IRegistry, IRegistryResponse } from '@/interface/interface-registry';
 import { IAddTickets } from '@/app/(home)/_ui/registry-context-menu/registry-add-info/RegistryTickets';
 import {IFilterResponse} from "@/interface/interface-filter";
-interface IQueryAllParams {
-  query?: string | null;
-  field?: string;
-  order?: string;
-  take?: number;
-  page?: number | string | null;
-}
+
+
 export const QueryRegistry = {
   async getAll({take,pageParam,query,order,field,filter}: {
     take?: number,
@@ -91,16 +86,16 @@ export const QueryRegistry = {
     });
     return data as IRegistry;
   },
-  async getPaid() {
-    const { data } = await instance.get<IRegistry[]>(`/registry/paid`);
-    return data as IRegistry[];
-  },
-  async getNotPaidOur() {
-    const { data } = await instance.get<IRegistry[]>(`/registry/not-paid-our`);
-    return data as IRegistry[];
-  },
-  async getNotPaidCarrier() {
-    const { data } = await instance.get<IRegistry[]>(`/registry/not-paid-carrier`);
-    return data as IRegistry[];
-  },
+ async uploadFile(file: any,id:number){
+   const formData = new FormData();
+   formData.append("file", file);
+
+   const {data} = await  axiosData.post(`/registry/upload/${id}`,formData);
+    return data as any
+ },
+
+ async getFiles(id:number) {
+    const { data } = await instance.get<IRegistry[]>(`/registry/files/${id}`)
+   return data as IRegistry[]
+ }
 };
