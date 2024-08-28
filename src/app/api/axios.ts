@@ -3,7 +3,7 @@ import axios, { CreateAxiosDefaults } from 'axios';
 import { getAccessToken, removeFromStorage } from '@/services/auth/auth.helper';
 
 import { authService } from '@/services/auth/auth.service';
-import { errorCatch, getContentType } from './api.helper';
+import {errorCatch, getContentType, getContentTypeData} from './api.helper';
 import { API_URL } from '@/constants';
 
 const axiosOptions: CreateAxiosDefaults = {
@@ -11,8 +11,14 @@ const axiosOptions: CreateAxiosDefaults = {
   headers: getContentType(),
   withCredentials: true,
 };
+const axiosOptionsData: CreateAxiosDefaults = {
+    baseURL: API_URL,
+    headers: getContentTypeData(),
+    withCredentials: true,
+};
 
 export const axiosClassic = axios.create(axiosOptions);
+export const axiosData = axios.create(axiosOptionsData);
 export const instance = axios.create(axiosOptions);
 
 
