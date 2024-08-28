@@ -16,11 +16,11 @@ export default function TooltipCustom({children,label,duration,skipDuration}:ITo
                 <Tooltip.Trigger asChild  >
                     {children}
                 </Tooltip.Trigger>
-            <Tooltip.Portal>
+
                 <Tooltip.Content  sideOffset={2} className={'h-full z-10 break-all  w-full bg-secondary-cust text-text backdrop-blur-lg max-w-[400px] rounded-lg border border-text  p-2 '}>
                     {label}
                 </Tooltip.Content>
-            </Tooltip.Portal>
+
             </Tooltip.Root>
         </Tooltip.Provider>
     );
