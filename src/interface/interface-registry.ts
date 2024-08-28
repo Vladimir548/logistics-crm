@@ -1,6 +1,7 @@
 import { IApplication } from '@/interface/interface-application';
 
 import { IInvoice } from '@/interface/interface-invoice';
+import {IFile} from "@/interface/interface-file";
 
 export type IRegistryResponse = {
   data: IRegistry[];
@@ -28,6 +29,7 @@ export interface IRegistry {
   costumerContactPerson: CostumerContactPerson;
   driver: Driver;
   user: User;
+  files:IFile[]
 }
 
 export interface Costumer {
