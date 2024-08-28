@@ -21,6 +21,7 @@ import cn from "classnames";
                 ghost: "hover:bg-accent hover:bg-text/10",
                 link: "text-primary underline-offset-4 hover:underline",
                 'no-style':'',
+                upload: "bg-blue-600 text-white border border-blue-600 shadow-sm hover:bg-blue-700",
                 icon:''
             },
             radius:{
