@@ -1,4 +1,4 @@
-import {axiosData, instance} from '@/app/api/axios';
+import { instance} from '@/app/api/axios';
 import { IRegistry, IRegistryResponse } from '@/interface/interface-registry';
 import { IAddTickets } from '@/app/(home)/_ui/registry-context-menu/registry-add-info/RegistryTickets';
 import {IFilterResponse} from "@/interface/interface-filter";
@@ -29,7 +29,6 @@ export const QueryRegistry = {
   },
   async getId(id: number) {
     if (id) {
-      console.log('start ' + id);
       const { data } = await instance.get<IRegistry>(`/registry/print/${id}`);
       return data as IRegistry;
     }
@@ -39,14 +38,6 @@ export const QueryRegistry = {
 
     return data as IRegistryResponse;
   },
-  // async changeStatus(id?: number, status?: StatusOrder) {
-  //   const query = {
-  //     id,
-  //     status,
-  //   };
-  //   const { data } = await instance.post<IRegistryResponse>('/registry/change-status', query);
-  //   return data as IRegistryResponse;
-  // },
   async delete(id: number) {
     if (id) {
       const { data } = await instance.delete<IRegistryResponse>(`/registry/delete/${id}`);
@@ -86,16 +77,6 @@ export const QueryRegistry = {
     });
     return data as IRegistry;
   },
- async uploadFile(file: any,id:number){
-   const formData = new FormData();
-   formData.append("file", file);
 
-   const {data} = await  axiosData.post(`/registry/upload/${id}`,formData);
-    return data as any
- },
 
- async getFiles(id:number) {
-    const { data } = await instance.get<IRegistry[]>(`/registry/files/${id}`)
-   return data as IRegistry[]
- }
 };

@@ -29,7 +29,7 @@ export interface IRegistry {
   costumerContactPerson: CostumerContactPerson;
   driver: Driver;
   user: User;
-  files:IFile[]
+  files:IFile
 }
 
 export interface Costumer {

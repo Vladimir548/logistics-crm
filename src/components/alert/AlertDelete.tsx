@@ -11,7 +11,7 @@ import {
 import {Button} from "@/components/buttons/Buttons";
 import {MdDelete} from "react-icons/md";
 
-export default function AlertDelete({context,onDelete}:{context:boolean,onDelete:()=>void}) {
+export default function AlertDelete({context,onDelete,text=true}:{context:boolean,onDelete:()=>void,text?:boolean}) {
     return (
         <>
             {context ? (
@@ -21,19 +21,19 @@ export default function AlertDelete({context,onDelete}:{context:boolean,onDelete
         >
             <AlertDialog>
                 <AlertDialogTrigger asChild className={'w-full'}>
-                    <Button
-                        variant={'delete'}
-                    >
-            <span>
-              <MdDelete size={20} />
-            </span>
+                    <Button variant={'delete'}>
+                        <span>
+                          <MdDelete size={20} />
+                        </span>
+                        {text && (
                         <p>Удалить запись</p>
+                        )}
                     </Button>
                 </AlertDialogTrigger>
 
                 <AlertDialogContent className={'bg-secondary-cust/50 border border-text backdrop-blur-2xl '}>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>
+                        <AlertDialogTitle className={'text-text'}>
                             Внимание! Вы уверены, что хотите удалить этот элемент? Все зависимые
                             элементы также будут удалены.
                         </AlertDialogTitle>

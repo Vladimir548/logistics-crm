@@ -17,16 +17,19 @@ export default function UploadFile({id}: { id: number }) {
     const [uploadStatus, setUploadStatus] = useState<Record<string, "select" | "uploading" | "done" | "error">>({});
     const send = useReactQuerySubscription({query:'update-document', tracking:'document'})
     const onDrop = useCallback((acceptedFiles: File[]) => {
-        for(const newFile of acceptedFiles) {
-            if (selectedFile.some(val => val.name === newFile.name)){
-              return   toast.error(<div className={'flex flex-col'}>
+        const newFiles = acceptedFiles.filter(newFile => {
+            if (selectedFile.some(val => val.name === newFile.name)) {
+                toast.error(<div className={'flex flex-col'}>
                     <h3 className={'leading-5 font-bold'}>{newFile.name}</h3>
                     <span>Файл уже в списке</span>
-                </div>)
+                </div>);
+                return false;
             }
-        }
-        setSelectedFile((prevState => [...prevState, ...acceptedFiles]))
-        acceptedFiles.forEach(file => {
+            return true;
+        })
+        if (newFiles.length === 0) return;
+        setSelectedFile((prevState => [...prevState, ...newFiles]))
+        newFiles.forEach(file => {
             setUploadStatus(prevState => ({
                 ...prevState, [file.name]: 'select',
             }))
@@ -79,7 +82,7 @@ export default function UploadFile({id}: { id: number }) {
             formData.append("file", file);
             try {
                 await axios.post(
-                    `http://localhost:5000/api/registry/upload/${id}`,
+                    `http://localhost:5000/api/files/registry/upload/${id}`,
                     formData,
                     {
                         onUploadProgress: (progressEvent) => {
