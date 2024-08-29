@@ -5,14 +5,16 @@ import {isImage} from "@/utils/isImage";
 import Image from "next/image";
 import cn from "classnames";
 import {getIconByExtension} from "@/styles/getIconByExtension";
-import TooltipCustom from "@/components/tooltip/TooltipCustom";
+import Link from "next/link";
+import DeleteFile from "@/components/upload-files/DeleteFile";
 
 export default function FileCard({file}: { file: IFile }) {
+    if (!file) return 'Список документов пуст'
     const ext = getExtensionFromFileName(file.filename);
     const imageUrl =
         ext && isImage(ext) ? "http://localhost:5000/uploads/" + file.filename : "";
     const color = getColorByExtension(ext);
-
+    const urlFile = `http://localhost:5000/uploads/${file.filename}`;
     const Icon = getIconByExtension(ext);
 
     function decodeFilename(encodedStr: string) {
@@ -22,29 +24,40 @@ export default function FileCard({file}: { file: IFile }) {
     }
 
     return (
-        <div className={'relative overflow-hidden'}>
+
+        <li className={'relative overflow-hidden cursor-pointer w-full flex justify-between items-center p-1 rounded-sm shadow-[0px_0px_3px_1px_#006F87] ease-in-out duration-300  hover:shadow-[inset_0px_0px_3px_1px_#006F87]'}>
             {isImage(ext) ? (
 
-                <TooltipCustom label={decodeFilename(file.originalname)} duration={0}>
-                    <li className={'flex flex-col cursor-pointer'}>
-                        <Image rel={'preload'} width={120} height={120} src={imageUrl}
-                               alt={decodeFilename(file.originalname)}/>
-                        <p className={'text-[12px] text-text'}> {decodeFilename(file.originalname)}</p>
-                    </li>
-                </TooltipCustom>
+                <Link href={urlFile} legacyBehavior passHref>
+                    <a target={"_blank"}>
+                            <div className={'flex w-full h-[60px] gap-x-2  items-center  '}>
+                                <div className={'flex flex-1'}>
+                                    <Image className={'aspect-video'} rel={'preload'} width={60} height={60} src={imageUrl}   alt={decodeFilename(file.originalname)}/>
+                                </div>
+                                <p className={' line-clamp-1 text-text'}> {decodeFilename(file.originalname)}</p>
+                            </div>
+                    </a>
+                </Link>
             ) : (
 
-                <TooltipCustom label={decodeFilename(file.originalname)} duration={0}>
-                    <li key={file.originalname} className={cn(`w-[120px] h-[100px] text-${color} flex flex-col cursor-pointer`,)}>
+                <Link href={urlFile} legacyBehavior passHref>
+                    <a target={"_blank"}>
+
+                            <div key={file.originalname}
+                                className={cn(`w-full h-[60px] items-center  gap-x-2 text-${color}  flex  `,)}>
                         <span style={{color: color}}
-                              className={cn(`flex items-center justify-center text-[80px] `)}>{Icon &&
+                              className={cn(`flex items-center justify-center text-[40px] `)}>{Icon &&
                             <Icon className={`text-${color}`}/>}</span>
-                        <p className={'text-[12px]  text-text'}>  {decodeFilename(file.originalname)}</p>
-                    </li>
-                </TooltipCustom>
+                                <p className={'line-clamp-1  text-text'}>  {decodeFilename(file.originalname)}</p>
+                            </div>
+
+                    </a>
+                </Link>
             )}
+    <div >
+        <DeleteFile id={file.id}/>
+    </div>
+        </li>
 
-
-        </div>
     );
 };
